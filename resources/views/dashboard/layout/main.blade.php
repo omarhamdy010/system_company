@@ -48,6 +48,7 @@
 </div>
 <!-- ./wrapper -->
 <!-- jQuery -->
+@yield('js')
 <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('assets/custom/system.js')}}"></script>
 <!-- Bootstrap 4 -->

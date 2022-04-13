@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::resource('/presence','\App\Http\Controllers\Dashboard\PageUserController');
 
 Auth::routes();
 
