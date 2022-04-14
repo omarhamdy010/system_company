@@ -22,7 +22,13 @@ class User extends Authenticatable
         'phone',
         'email',
         'password',
+        'image',
     ];
+    protected $appends=['image_path'];
+
+    public function getImagePathAttribute(){
+        return asset('uploads/user/'.$this->image);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

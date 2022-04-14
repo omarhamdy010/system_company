@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+
+    @yield('css')
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <!-- Site wrapper -->
@@ -23,9 +27,9 @@
 <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-
+@if(auth()->user()->status==1)
 @include('dashboard.layout.sidebar')
-
+@endif
 
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

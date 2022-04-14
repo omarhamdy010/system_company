@@ -43,7 +43,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('home')}}" class="nav-link">
+                            <a href="{{route('presence.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>{{__('site.home')}}</p>
                             </a>
@@ -62,15 +62,15 @@
 {{--                        </li>--}}
                     </ul>
                 </li>
-{{--                <li class="nav-item">--}}
-{{--                    <a href="../widgets.html" class="nav-link">--}}
-{{--                        <i class="nav-icon fas fa-th"></i>--}}
-{{--                        <p>--}}
-{{--                            Widgets--}}
+                <li class="nav-item">
+                    <a href="{{route('presence.profile',['id'=>auth()->user()->id])}}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Profile
 {{--                            <span class="right badge badge-danger">New</span>--}}
-{{--                        </p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                        </p>
+                    </a>
+                </li>
 {{--                <li class="nav-item menu-open">--}}
 {{--                    <a href="#" class="nav-link active">--}}
 {{--                        <i class="nav-icon fas fa-copy"></i>--}}
@@ -131,7 +131,7 @@
 {{--                        </li>--}}
 {{--                    </ul>--}}
 {{--                </li>--}}
-{{--                <li class="nav-item">--}}
+{{--                <li c lass="nav-item">--}}
 {{--                    <a href="#" class="nav-link">--}}
 {{--                        <i class="nav-icon fas fa-chart-pie"></i>--}}
 {{--                        <p>--}}

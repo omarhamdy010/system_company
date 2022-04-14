@@ -57,21 +57,30 @@
                                     <input type="hidden" name="status" value="{{auth()->user()->status}}">
                                     <input type="hidden" name="id" value="{{auth()->user()->id}}">
                                     <input type="hidden" name="email" value="{{auth()->user()->email}}">
-                                    <button type="submit" class="btn btn-success btn-sm "
+                                    <button type="submit" class="btn btn-success btn-sm prense"
                                         {{--                                        data-name="{{auth()->user()->name}}"--}}
                                         {{--                                        data-phone="{{auth()->user()->phone}}"--}}
                                         {{--                                        data-email="{{auth()->user()->email}}"--}}
                                         {{--                                        data-id="{{auth()->user()->id}}"--}}
                                     >حضور
-                                    </button></form>
-                                    <form method="post" action="">
+                                    </button>
+                                </form>
+                                <form method="post" action="{{route('presence.save')}}">
+                                    @method('POST')
+                                    @csrf
+                                    <input type="hidden" name="name" value="{{auth()->user()->name}}">
+                                    <input type="hidden" name="phone" value="{{auth()->user()->phone}}">
+                                    <input type="hidden" name="status" value="{{auth()->user()->status}}">
+                                    <input type="hidden" name="id" value="{{auth()->user()->id}}">
+                                    <input type="hidden" name="email" value="{{auth()->user()->email}}">
                                     <button type="submit" class="btn btn-danger btn-sm " id="abence"
-{{--                                   data-name="{{auth()->user()->name}}"--}}
-{{--                                   data-phone="{{auth()->user()->phone}}"--}}
-{{--                                   data-email="{{auth()->user()->email}}"--}}
-{{--                                   data-id="{{auth()->user()->id}}"--}}
-                                    >انصراف</button>
-                                    </form>
+                                        {{--                                   data-name="{{auth()->user()->name}}"--}}
+                                        {{--                                   data-phone="{{auth()->user()->phone}}"--}}
+                                        {{--                                   data-email="{{auth()->user()->email}}"--}}
+                                        {{--                                   data-id="{{auth()->user()->id}}"--}}
+                                    >انصراف
+                                    </button>
+                                </form>
                             @endif
 
                         </div>
@@ -88,11 +97,12 @@
                                                 <table class="table mb-0">
                                                     <thead>
                                                     <tr>
-                                                        <th>NAME</th>
-                                                        <th>EMAIL</th>
-                                                        <th>PHONE</th>
-                                                        <th>presence time</th>
-                                                        <th>absence time</th>
+                                                        <th>الاسم</th>
+                                                        <th>الايميل</th>
+                                                        <th>رقم الهاتف</th>
+                                                        <th>وقت الحضور</th>
+                                                        <th>وقت الانصراف</th>
+                                                        <th>اليوم</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody
@@ -105,6 +115,7 @@
                                                             <td class="text-bold-500">{{$presence_user->phone}}</td>
                                                             <td>{{$presence_user->presence_time}}</td>
                                                             <td>{{$presence_user->absence_time}}</td>
+                                                            <td>{{\Illuminate\Support\Carbon::tomorrow()->format('l')}}</td>
                                                         </tr>
                                                     @endforeach
                                                     </tbody>
@@ -125,37 +136,6 @@
 @endsection
 @section('js')
     <script>
-        $(document).ready(function(){
-
-            $(document).on("click", "#abence", function() {
-                alert('nf');
-                {{--var url = "{{URL('userData/'.$userData->id)}}";--}}
-                {{--    $.ajax({--}}
-                {{--        url: url,--}}
-                {{--        type: "PATCH",--}}
-                {{--        cache: false,--}}
-                {{--        data:{--}}
-                {{--            _token:'{{ csrf_token() }}',--}}
-                {{--            type: 3,--}}
-                {{--            name: $('#name').val(),--}}
-                {{--            email: $('#email').val(),--}}
-                {{--            phone: $('#phone').val(),--}}
-                {{--            city: $('#city').val()--}}
-                {{--        },--}}
-                {{--        success: function(dataResult){--}}
-                {{--            dataResult = JSON.parse(dataResult);--}}
-                {{--            if(dataResult.statusCode)--}}
-                {{--            {--}}
-                {{--                window.location = "/userData";--}}
-                {{--            }--}}
-                {{--            else{--}}
-                {{--                alert("Internal Server Error");--}}
-                {{--            }--}}
-
-                {{--        }--}}
-                {{--    });--}}
-            });
-        });
 
     </script>
-    @endsection
+@endsection
