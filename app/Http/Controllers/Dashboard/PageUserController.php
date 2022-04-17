@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PageUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -13,50 +14,67 @@ class PageUserController extends Controller
 {
     public function index()
     {
-        $presence_users = PageUser::all();
+        $presence_users = PageUser::where('user_id',auth()->user()->id)->get();
         return view('/dashboard.user_page.index', compact('presence_users'));
     }
 
     public function store(User $user, Request $request)
     {
         $pageuser = [
-            'username' => $request->name,
+            'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'user_id' =>auth()->user()->id,
             'presence_time' => '-',
             'absence_time' => '-',
+            'day'=>'-',
         ];
 
         $pag = PageUser::create($pageuser);
         $pageuser = [
             'presence_time' => $pag->created_at,
+            'day'=>\Illuminate\Support\Carbon::today()->format('l'),
         ];
 
         $pag->update($pageuser);
 
-        return redirect()->back();
+
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data inserted successfully'
+            ]
+        );
     }
 
 
     public function save(User $user, Request $request)
     {
         $pageuser = [
-            'username' => $request->name,
+            'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'user_id' =>auth()->user()->id,
             'presence_time' => '-',
             'absence_time' => '-',
+            'day'=>'-',
         ];
 
         $pag = PageUser::create($pageuser);
         $pageuser = [
             'absence_time' => $pag->created_at,
+            'day'=>\Illuminate\Support\Carbon::today()->format('l'),
+
         ];
 
         $pag->update($pageuser);
 
-        return redirect()->back();
-    }
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data inserted successfully'
+            ]
+        );    }
 
     public function profile()
     {
@@ -79,7 +97,7 @@ class PageUserController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
-            'password'=>$request->password
+            'password'=>Hash::make($request->password)
         ]);
 
         return redirect()->back();

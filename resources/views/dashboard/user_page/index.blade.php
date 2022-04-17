@@ -50,34 +50,34 @@
                             @else
                                 <form method="post" action="{{route('presence.store')}}">
                                     @method('POST')
-                                    @csrf
 
+                                    <input type="hidden" name="_token" id="token1" value="{{csrf_token()}}">
                                     <input type="hidden" name="name" value="{{auth()->user()->name}}">
                                     <input type="hidden" name="phone" value="{{auth()->user()->phone}}">
                                     <input type="hidden" name="status" value="{{auth()->user()->status}}">
                                     <input type="hidden" name="id" value="{{auth()->user()->id}}">
                                     <input type="hidden" name="email" value="{{auth()->user()->email}}">
-                                    <button type="submit" class="btn btn-success btn-sm prense"
-                                        {{--                                        data-name="{{auth()->user()->name}}"--}}
-                                        {{--                                        data-phone="{{auth()->user()->phone}}"--}}
-                                        {{--                                        data-email="{{auth()->user()->email}}"--}}
-                                        {{--                                        data-id="{{auth()->user()->id}}"--}}
+                                    <button type="submit" class="btn btn-success btn-sm presence"
+                                            data-name="{{auth()->user()->name}}"
+                                            data-phone="{{auth()->user()->phone}}"
+                                            data-email="{{auth()->user()->email}}"
+                                            data-id="{{auth()->user()->id}}"
                                     >حضور
                                     </button>
                                 </form>
                                 <form method="post" action="{{route('presence.save')}}">
                                     @method('POST')
-                                    @csrf
+                                    <input type="hidden" name="_token" id="token2" value="{{csrf_token()}}">
                                     <input type="hidden" name="name" value="{{auth()->user()->name}}">
                                     <input type="hidden" name="phone" value="{{auth()->user()->phone}}">
                                     <input type="hidden" name="status" value="{{auth()->user()->status}}">
                                     <input type="hidden" name="id" value="{{auth()->user()->id}}">
                                     <input type="hidden" name="email" value="{{auth()->user()->email}}">
-                                    <button type="submit" class="btn btn-danger btn-sm " id="abence"
-                                        {{--                                   data-name="{{auth()->user()->name}}"--}}
-                                        {{--                                   data-phone="{{auth()->user()->phone}}"--}}
-                                        {{--                                   data-email="{{auth()->user()->email}}"--}}
-                                        {{--                                   data-id="{{auth()->user()->id}}"--}}
+                                    <button type="submit" class="btn btn-danger btn-sm absence"
+                                            data-name="{{auth()->user()->name}}"
+                                            data-phone="{{auth()->user()->phone}}"
+                                            data-email="{{auth()->user()->email}}"
+                                            data-id="{{auth()->user()->id}}"
                                     >انصراف
                                     </button>
                                 </form>
@@ -106,16 +106,16 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody
-                                                        {{--                                                                class="user_table"--}}
+                                                        class="user_table"
                                                     >
                                                     @foreach($presence_users as $presence_user )
-                                                        <tr class="table-info" id="presence_add_${id}">
-                                                            <td class="text-bold-500">{{$presence_user->username}}</td>
+                                                        <tr class="table-info">
+                                                            <td class="text-bold-500">{{$presence_user->name}}</td>
                                                             <td>{{$presence_user->email}}</td>
                                                             <td class="text-bold-500">{{$presence_user->phone}}</td>
                                                             <td>{{$presence_user->presence_time}}</td>
                                                             <td>{{$presence_user->absence_time}}</td>
-                                                            <td>{{\Illuminate\Support\Carbon::tomorrow()->format('l')}}</td>
+                                                            <td>{{$presence_user->day}}</td>
                                                         </tr>
                                                     @endforeach
                                                     </tbody>
@@ -133,9 +133,4 @@
     </section>
     <!-- /.content -->
 
-@endsection
-@section('js')
-    <script>
-
-    </script>
 @endsection

@@ -1,4 +1,5 @@
 @extends('dashboard.layout.main')
+
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
@@ -40,70 +41,6 @@
                         </div>
                         <div class="main-content">
                             <!-- Top navbar -->
-                            <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-                                <div class="container-fluid">
-                                    <!-- Brand -->
-{{--                                    <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"--}}
-{{--                                       href="https://www.creative-tim.com/product/argon-dashboard" target="_blank">User--}}
-{{--                                        profile</a>--}}
-                                    <!-- Form -->
-{{--                                    <form--}}
-{{--                                        class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">--}}
-{{--                                        <div class="form-group mb-0">--}}
-{{--                                            <div class="input-group input-group-alternative">--}}
-{{--                                                <div class="input-group-prepend">--}}
-{{--                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>--}}
-{{--                                                </div>--}}
-{{--                                                <input class="form-control" placeholder="Search" type="text">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </form>--}}
-                                    <!-- User -->
-{{--                                    <ul class="navbar-nav align-items-center d-none d-md-flex">--}}
-{{--                                        <li class="nav-item dropdown">--}}
-{{--                                            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown"--}}
-{{--                                               aria-haspopup="true" aria-expanded="false">--}}
-{{--                                                <div class="media align-items-center">--}}
-{{--                <span class="avatar avatar-sm rounded-circle">--}}
-{{--                  <img alt="Image placeholder"--}}
-{{--                       src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg">--}}
-{{--                </span>--}}
-{{--                                                    <div class="media-body ml-2 d-none d-lg-block">--}}
-{{--                                                        <span--}}
-{{--                                                            class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </a>--}}
-{{--                                            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">--}}
-{{--                                                <div class=" dropdown-header noti-title">--}}
-{{--                                                    <h6 class="text-overflow m-0">Welcome!</h6>--}}
-{{--                                                </div>--}}
-{{--                                                <a href="../examples/profile.html" class="dropdown-item">--}}
-{{--                                                    <i class="ni ni-single-02"></i>--}}
-{{--                                                    <span>My profile</span>--}}
-{{--                                                </a>--}}
-{{--                                                <a href="../examples/profile.html" class="dropdown-item">--}}
-{{--                                                    <i class="ni ni-settings-gear-65"></i>--}}
-{{--                                                    <span>Settings</span>--}}
-{{--                                                </a>--}}
-{{--                                                <a href="../examples/profile.html" class="dropdown-item">--}}
-{{--                                                    <i class="ni ni-calendar-grid-58"></i>--}}
-{{--                                                    <span>Activity</span>--}}
-{{--                                                </a>--}}
-{{--                                                <a href="../examples/profile.html" class="dropdown-item">--}}
-{{--                                                    <i class="ni ni-support-16"></i>--}}
-{{--                                                    <span>Support</span>--}}
-{{--                                                </a>--}}
-{{--                                                <div class="dropdown-divider"></div>--}}
-{{--                                                <a href="#!" class="dropdown-item">--}}
-{{--                                                    <i class="ni ni-user-run"></i>--}}
-{{--                                                    <span>Logout</span>--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-                                </div>
-                            </nav>
                             <!-- Header -->
                             <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
                                  style="min-height: 600px; background-image: url(https://raw.githubusercontent.com/creativetimofficial/argon-dashboard/gh-pages/assets-old/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
@@ -151,33 +88,34 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
-                                                    <div class="h5 font-weight-300">
-                                                        <form method="post" action="{{route('updateimage',['id'=>auth()->user()->id])}}" enctype="multipart/form-data">
-                                                            @method('PUT')
-                                                            @csrf
-                                                            <input type="file" name="image">
-                                                            <input type="submit" value="Upload">
-                                                        </form>
+                                                <div class="text-center parent">
+                                                    <div class="h5 font-weight-300 child" >
+                                                            <form method="post" action="{{route('updateimage',['id'=>auth()->user()->id])}}" enctype="multipart/form-data">
+                                                                @method('PUT')
+                                                                @csrf
+                                                                <span class="btn btn-primary btn-file">Browse...<input type="file" name="image"></span>
+                                                                <hr class="my-4">
+                                                                <div>
+                                                                    <i class="ni education_hat mr-2"></i>{{auth()->user()->email}}
+                                                                </div>
+                                                                <hr class="my-4">
+                                                                <h3>
+                                                                    {{auth()->user()->name}}
+                                                                </h3>
+                                                                <hr class="my-4">
+                                                                <div class="h5 font-weight-300">
+                                                                    <i class="ni location_pin mr-2"></i>{{auth()->user()->phone}}
+                                                                </div>
+                                                                <hr class="my-4">
+                                                                <button type="submit" class="btn btn-primary btn-sm ">Upload photo</button>
+                                                            </form>
                                                     </div>
-                                                    <div class="h5 font-weight-300">
-                                                        <form method="post" action="{{route('deleteimage',['id'=>auth()->user()->id])}}" enctype="multipart/form-data">
-                                                            @method('Delete')
-                                                            @csrf
-                                                            <input type="submit" value="Delete">
-                                                        </form>
-                                                    </div>
-                                                    <hr class="my-4">
-                                                    <div>
-                                                        <i class="ni education_hat mr-2"></i>{{auth()->user()->email}}
-                                                    </div>
-                                                    <hr class="my-4">
-                                                    <h3>
-                                                        {{auth()->user()->name}}
-                                                    </h3>
-                                                    <hr class="my-4">
-                                                    <div class="h5 font-weight-300">
-                                                        <i class="ni location_pin mr-2"></i>{{auth()->user()->phone}}
+                                                    <div class='child'>
+                                                    <form method="post" action="{{route('deleteimage',['id'=>auth()->user()->id])}}" enctype="multipart/form-data">
+                                                        @method('Delete')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-primary btn-sm ">Delete photo</button>
+                                                    </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1015,44 +953,44 @@
             position: relative;
         }
 
-        .dropdown-menu {
-            font-size: 1rem;
-            position: absolute;
-            z-index: 1000;
-            top: 100%;
-            left: 0;
-            display: none;
-            float: left;
-            min-width: 10rem;
-            margin: .125rem 0 0;
-            padding: .5rem 0;
-            list-style: none;
-            text-align: left;
-            color: #525f7f;
-            border: 0 solid rgba(0, 0, 0, .15);
-            border-radius: .4375rem;
-            background-color: #fff;
-            background-clip: padding-box;
-            box-shadow: 0 50px 100px rgba(50, 50, 93, .1), 0 15px 35px rgba(50, 50, 93, .15), 0 5px 15px rgba(0, 0, 0, .1);
-        }
+        /*.dropdown-menu {*/
+        /*    font-size: 1rem;*/
+        /*    position: absolute;*/
+        /*    z-index: 1000;*/
+        /*    top: 100%;*/
+        /*    left: 0;*/
+        /*    display: none;*/
+        /*    float: left;*/
+        /*    min-width: 10rem;*/
+        /*    margin: .125rem 0 0;*/
+        /*    padding: .5rem 0;*/
+        /*    list-style: none;*/
+        /*    text-align: left;*/
+        /*    color: #525f7f;*/
+        /*    border: 0 solid rgba(0, 0, 0, .15);*/
+        /*    border-radius: .4375rem;*/
+        /*    background-color: #fff;*/
+        /*    background-clip: padding-box;*/
+        /*    box-shadow: 0 50px 100px rgba(50, 50, 93, .1), 0 15px 35px rgba(50, 50, 93, .15), 0 5px 15px rgba(0, 0, 0, .1);*/
+        /*}*/
 
-        .dropdown-menu.show {
-            display: block;
-            opacity: 1;
-        }
+        /*.dropdown-menu.show {*/
+        /*    display: block;*/
+        /*    opacity: 1;*/
+        /*}*/
 
-        .dropdown-menu-right {
-            right: 0;
-            left: auto;
-        }
+        /*.dropdown-menu-right {*/
+        /*    right: 0;*/
+        /*    left: auto;*/
+        /*}*/
 
-        .dropdown-menu[x-placement^='top'],
-        .dropdown-menu[x-placement^='right'],
-        .dropdown-menu[x-placement^='bottom'],
-        .dropdown-menu[x-placement^='left'] {
-            right: auto;
-            bottom: auto;
-        }
+        /*.dropdown-menu[x-placement^='top'],*/
+        /*.dropdown-menu[x-placement^='right'],*/
+        /*.dropdown-menu[x-placement^='bottom'],*/
+        /*.dropdown-menu[x-placement^='left'] {*/
+        /*    right: auto;*/
+        /*    bottom: auto;*/
+        /*}*/
 
         .dropdown-divider {
             overflow: hidden;
@@ -1207,22 +1145,22 @@
             text-decoration: none;
         }
 
-        .navbar {
-            position: relative;
-            display: flex;
-            padding: 1rem 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-        }
+        /*.navbar {*/
+        /*    position: relative;*/
+        /*    display: flex;*/
+        /*    padding: 1rem 1rem;*/
+        /*    flex-wrap: wrap;*/
+        /*    align-items: center;*/
+        /*    justify-content: space-between;*/
+        /*}*/
 
-        .navbar > .container,
-        .navbar > .container-fluid {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-        }
+        /*.navbar > .container,*/
+        /*.navbar > .container-fluid {*/
+        /*    display: flex;*/
+        /*    flex-wrap: wrap;*/
+        /*    align-items: center;*/
+        /*    justify-content: space-between;*/
+        /*}*/
 
         .navbar-nav {
             display: flex;
@@ -1237,10 +1175,10 @@
             padding-left: 0;
         }
 
-        .navbar-nav .dropdown-menu {
-            position: static;
-            float: none;
-        }
+        /*.navbar-nav .dropdown-menu {*/
+        /*    position: static;*/
+        /*    float: none;*/
+        /*}*/
 
         @media (max-width: 767.98px) {
 
@@ -1261,9 +1199,9 @@
                 flex-direction: row;
             }
 
-            .navbar-expand-md .navbar-nav .dropdown-menu {
-                position: absolute;
-            }
+            /*.navbar-expand-md .navbar-nav .dropdown-menu {*/
+            /*    position: absolute;*/
+            /*}*/
 
             .navbar-expand-md .navbar-nav .nav-link {
                 padding-right: 1rem;
@@ -1633,9 +1571,9 @@
                 min-width: 992px !important;
             }
 
-            .navbar {
-                display: none;
-            }
+            /*.navbar {*/
+            /*    display: none;*/
+            /*}*/
         }
 
         figcaption,
@@ -1872,20 +1810,20 @@
             display: inline-block;
         }
 
-        .dropdown-menu {
-            min-width: 12rem;
-        }
+        /*.dropdown-menu {*/
+        /*    min-width: 12rem;*/
+        /*}*/
 
-        .dropdown-menu .dropdown-item {
-            font-size: .875rem;
-            padding: .5rem 1rem;
-        }
+        /*.dropdown-menu .dropdown-item {*/
+        /*    font-size: .875rem;*/
+        /*    padding: .5rem 1rem;*/
+        /*}*/
 
-        .dropdown-menu .dropdown-item > i {
-            font-size: 1rem;
-            margin-right: 1rem;
-            vertical-align: -17%;
-        }
+        /*.dropdown-menu .dropdown-item > i {*/
+        /*    font-size: 1rem;*/
+        /*    margin-right: 1rem;*/
+        /*    vertical-align: -17%;*/
+        /*}*/
 
         .dropdown-header {
             font-size: .625rem;
@@ -1896,18 +1834,18 @@
             color: #f6f9fc;
         }
 
-        .dropdown-menu a.media > div:first-child {
-            line-height: 1;
-        }
+        /*.dropdown-menu a.media > div:first-child {*/
+        /*    line-height: 1;*/
+        /*}*/
 
-        .dropdown-menu a.media p {
-            color: #8898aa;
-        }
+        /*.dropdown-menu a.media p {*/
+        /*    color: #8898aa;*/
+        /*}*/
 
-        .dropdown-menu a.media:hover .heading,
-        .dropdown-menu a.media:hover p {
-            color: #172b4d !important;
-        }
+        /*.dropdown-menu a.media:hover .heading,*/
+        /*.dropdown-menu a.media:hover p {*/
+        /*    color: #172b4d !important;*/
+        /*}*/
 
         .footer {
             padding: 2.5rem 0;
@@ -2167,31 +2105,31 @@
         }
 
         @media (min-width: 768px) {
-            .navbar .dropdown-menu {
-                margin: 0;
-                pointer-events: none;
-                opacity: 0;
-            }
+            /*.navbar .dropdown-menu {*/
+            /*    margin: 0;*/
+            /*    pointer-events: none;*/
+            /*    opacity: 100;*/
+            /*}*/
 
-            .navbar .dropdown-menu-arrow:before {
-                position: absolute;
-                z-index: -5;
-                bottom: 100%;
-                left: 20px;
-                display: block;
-                width: 12px;
-                height: 12px;
-                content: '';
-                transform: rotate(-45deg) translateY(12px);
-                border-radius: 2px;
-                background: #fff;
-                box-shadow: none;
-            }
+            /*.navbar .dropdown-menu-arrow:before {*/
+            /*    position: absolute;*/
+            /*    z-index: -5;*/
+            /*    bottom: 100%;*/
+            /*    left: 20px;*/
+            /*    display: block;*/
+            /*    width: 12px;*/
+            /*    height: 12px;*/
+            /*    content: '';*/
+            /*    transform: rotate(-45deg) translateY(12px);*/
+            /*    border-radius: 2px;*/
+            /*    background: #fff;*/
+            /*    box-shadow: none;*/
+            /*}*/
 
-            .navbar .dropdown-menu-right:before {
-                right: 20px;
-                left: auto;
-            }
+            /*.navbar .dropdown-menu-right:before {*/
+            /*    right: 20px;*/
+            /*    left: auto;*/
+            /*}*/
 
             @keyframes show-navbar-dropdown {
                 0% {
@@ -2224,10 +2162,10 @@
                 color: #172b4d !important;
             }
 
-            .navbar-nav .dropdown-menu {
-                min-width: auto;
-                box-shadow: none;
-            }
+            /*.navbar-nav .dropdown-menu {*/
+            /*    min-width: auto;*/
+            /*    box-shadow: none;*/
+            /*}*/
         }
 
         @keyframes show-navbar-collapse {
@@ -2301,9 +2239,9 @@
             }
         }
 
-        #navbar .navbar {
-            margin-bottom: 20px;
-        }
+        /*#navbar .navbar {*/
+        /*    margin-bottom: 20px;*/
+        /*}*/
     </style>
 @endsection
 
