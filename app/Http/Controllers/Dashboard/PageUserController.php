@@ -135,4 +135,9 @@ class PageUserController extends Controller
         return redirect()->back();
     }
 
+    public function calc(){
+        $x = PageUser::where('user_id',auth()->user()->id)->get();
+        dd($x);
+    }
+
 }

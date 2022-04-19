@@ -41,13 +41,12 @@ class EventController extends Controller
     }
     public function ajax(Request $request)
     {
-
         switch ($request->type) {
             case 'add':
                 $event = Event::create([
                     'title' => $request->title,
-                    'start' => $request->start,
-                    'end' => $request->end,
+                    'start_date' => $request->start,
+                    'end_date' => $request->end,
                 ]);
 
                 return response()->json($event);
@@ -74,5 +73,6 @@ class EventController extends Controller
                 break;
         }
     }
+
 
 }

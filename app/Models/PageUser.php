@@ -9,7 +9,9 @@ class PageUser extends Model
 {
     use HasFactory;
     protected $guarded = [];
-public function user(){
-    $this->hasOne(User::class);
-}
+
+    public function user()
+    {
+        $this->hasOne(User::class);
+    }
 }

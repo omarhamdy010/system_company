@@ -4,9 +4,9 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-{{--                <div class="col-sm-6">--}}
-{{--                    <h1>User Profile Card</h1>--}}
-{{--                </div>--}}
+                {{--                <div class="col-sm-6">--}}
+                {{--                    <h1>User Profile Card</h1>--}}
+                {{--                </div>--}}
                 <div class="col-sm-6">
                     {{--                        <ol class="breadcrumb float-sm-right">--}}
                     {{--                            <li class="breadcrumb-item"><a href="#">Home</a></li>--}}
@@ -51,10 +51,10 @@
                                     <div class="row">
                                         <div class="col-lg-7 col-md-10">
                                             <h1 class="display-2 text-white">Hello {{auth()->user()->name}}</h1>
-{{--                                            <p class="text-white mt-0 mb-5">This is your profile page. You can see the--}}
-{{--                                                progress you've made with your work and manage your projects or assigned--}}
-{{--                                                tasks</p>--}}
-{{--                                            <a href="#!" class="btn btn-info">Edit profile</a>--}}
+                                            {{--                                            <p class="text-white mt-0 mb-5">This is your profile page. You can see the--}}
+                                            {{--                                                progress you've made with your work and manage your projects or assigned--}}
+                                            {{--                                                tasks</p>--}}
+                                            {{--                                            <a href="#!" class="btn btn-info">Edit profile</a>--}}
                                         </div>
                                     </div>
                                 </div>
@@ -64,136 +64,139 @@
                                 <div class="row">
                                     <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                                         <div class="card card-profile shadow">
-                                            <div class="row justify-content-center">
-                                                <div class="col-lg-3 order-lg-2">
-                                                    <div class="card-profile-image">
-                                                            <img src="{{auth()->user()->image_path}}"
-                                                                class="rounded-circle">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="">
-                                                <div class="d-flex justify-content-between">
-                                                    <a href="#" class="btn btn-sm"></a>
-                                                </div>
-                                            </div>
-                                            <div class="card-body pt-0 pt-md-4">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div
-                                                            class="card-profile-stats d-flex justify-content-center mt-md-5">
-                                                            <div>
 
-                                                            </div>
+                                            <form method="post"
+                                                  action="{{route('updateimage',['id'=>auth()->user()->id])}}"
+                                                  enctype="multipart/form-data">
+                                                @method('PUT')
+                                                <div class="avatar-upload">
+                                                    <div class="avatar-edit">
+                                                        <input type='file' name="image" id="imageUpload"
+                                                               accept=".png, .jpg, .jpeg"/>
+                                                        <label for="imageUpload"></label>
+                                                    </div>
+                                                    <div class="avatar-preview">
+                                                        <div id="imagePreview"
+                                                             style="background-image: url({{auth()->user()->image_Path}});">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="text-center parent">
-                                                    <div class="h5 font-weight-300 child" >
-                                                            <form method="post" action="{{route('updateimage',['id'=>auth()->user()->id])}}" enctype="multipart/form-data">
-                                                                @method('PUT')
-                                                                @csrf
-                                                                <span class="btn btn-primary btn-file">Browse...<input type="file" name="image"></span>
-                                                                <hr class="my-4">
-                                                                <div>
-                                                                    <i class="ni education_hat mr-2"></i>{{auth()->user()->email}}
-                                                                </div>
-                                                                <hr class="my-4">
-                                                                <h3>
-                                                                    {{auth()->user()->name}}
-                                                                </h3>
-                                                                <hr class="my-4">
-                                                                <div class="h5 font-weight-300">
-                                                                    <i class="ni location_pin mr-2"></i>{{auth()->user()->phone}}
-                                                                </div>
-                                                                <hr class="my-4">
-                                                                <button type="submit" class="btn btn-primary btn-sm ">Upload photo</button>
-                                                            </form>
+                                                    <div class="h5 font-weight-300 child">
+
+                                                        <input type="hidden" name="_token" id="token2"
+                                                               value="{{csrf_token()}}">
+                                                        {{--                                                                <span class="btn btn-primary btn-file">Browse...<input type="file" name="image" id="request_image"></span>--}}
+                                                        {{--                                                                <hr class="my-4">--}}
+                                                        <div>
+                                                            <i class="ni education_hat mr-2"></i>{{auth()->user()->email}}
+                                                        </div>
+                                                        <hr class="my-4">
+                                                        <h3>
+                                                            {{auth()->user()->name}}
+                                                        </h3>
+                                                        <hr class="my-4">
+                                                        <div class="h5 font-weight-300">
+                                                            <i class="ni location_pin mr-2"></i>{{auth()->user()->phone}}
+                                                        </div>
+                                                        <hr class="my-4">
+                                                        <button type="submit" data-id="{{auth()->user()->id}}"
+                                                                data-image="{{auth()->user()->image}}"
+                                                                class="btn btn-primary btn-sm image_profile">Upload
+                                                            photo
+                                                        </button>
                                                     </div>
-                                                    <div class='child'>
-                                                    <form method="post" action="{{route('deleteimage',['id'=>auth()->user()->id])}}" enctype="multipart/form-data">
-                                                        @method('Delete')
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-primary btn-sm ">Delete photo</button>
-                                                    </form>
-                                                    </div>
-                                                </div>
+                                            </form>
+                                            <div class='child'>
+                                                <form method="post"
+                                                      action="{{route('deleteimage',['id'=>auth()->user()->id])}}"
+                                                      enctype="multipart/form-data">
+                                                    @method('Delete')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-primary btn-sm ">Delete photo
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-8 order-xl-1">
-                                        <div class="card bg-secondary shadow">
-                                            <div class="card-header bg-white border-0">
-                                                <div class="row align-items-center">
-                                                    <div class="col-8">
-                                                        <h3 class="mb-0">My account</h3>
-                                                    </div>
-                                                    <div class="col-4 text-right">
-                                                        {{--                                                        <a href="#!" class="btn btn-sm btn-primary">Settings</a>--}}
-                                                    </div>
+                                </div>
+                                <div class="col-xl-8 order-xl-1">
+                                    <div class="card bg-secondary shadow">
+                                        <div class="card-header bg-white border-0">
+                                            <div class="row align-items-center">
+                                                <div class="col-8">
+                                                    <h3 class="mb-0">My account</h3>
                                                 </div>
                                             </div>
-                                            <div class="card-body">
-                                                <form method="post" action="{{route('updateprofile',['id'=>auth()->user()->id])}}">
-                                                    @method('PUT')
-                                                    @csrf
-                                                    <h6 class="heading-small text-muted mb-4">User information</h6>
-                                                    <div class="pl-lg-4">
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group focused">
-                                                                    <label class="form-control-label"
-                                                                           for="input-username">name</label>
-                                                                    <input type="text" id="input-username" name="name"
-                                                                           class="form-control form-control-alternative"
-                                                                           placeholder="Username"
-                                                                           value="{{old('name')}}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group">
-                                                                    <label class="form-control-label" for="input-email">Email
-                                                                        address</label>
-                                                                    <input type="email" id="input-email" name="email"
-                                                                           class="form-control form-control-alternative"
-                                                                           placeholder="email">
-                                                                </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <form method="post"
+                                                  action="{{route('updateprofile',['id'=>auth()->user()->id])}}">
+                                                @method('PUT')
+                                                @csrf
+                                                <h6 class="heading-small text-muted mb-4">User information</h6>
+                                                <div class="pl-lg-4">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group focused">
+                                                                <label class="form-control-label"
+                                                                       for="input-username">name</label>
+                                                                <input type="text" id="input-username" name="name"
+                                                                       class="form-control form-control-alternative"
+                                                                       placeholder="Username"
+                                                                       value="{{old('name')}}">
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group focused">
-                                                                    <label class="form-control-label" for="input-phone">phone</label>
-                                                                    <input type="text" id="input-phone" name="phone"
-                                                                           class="form-control form-control-alternative"
-                                                                           placeholder="phone" value="{{old('phone')}}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group focused">
-                                                                    <label class="form-control-label" for="input-pass">password</label>
-                                                                    <input type="password" id="input-pass" name="password"
-                                                                           class="form-control form-control-alternative"
-                                                                           placeholder="password" value="{{old('password')}}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group focused">
-                                                                    <label class="form-control-label" for="input-password_confirmation">password confirmation</label>
-                                                                    <input type="password" id="input-password_confirmation" name="password_confirmation"
-                                                                           class="form-control form-control-alternative"
-                                                                           placeholder="password" value="{{old('password_confirmation')}}">
-                                                                </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="form-control-label" for="input-email">Email
+                                                                    address</label>
+                                                                <input type="email" id="input-email" name="email"
+                                                                       class="form-control form-control-alternative"
+                                                                       placeholder="email">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <div style="" align="right" class="form-group">
-                                                            <button type="submit" class="btn btn-info">Edit</button>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group focused">
+                                                                <label class="form-control-label"
+                                                                       for="input-phone">phone</label>
+                                                                <input type="text" id="input-phone" name="phone"
+                                                                       class="form-control form-control-alternative"
+                                                                       placeholder="phone" value="{{old('phone')}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group focused">
+                                                                <label class="form-control-label"
+                                                                       for="input-pass">password</label>
+                                                                <input type="password" id="input-pass" name="password"
+                                                                       class="form-control form-control-alternative"
+                                                                       placeholder="password"
+                                                                       value="{{old('password')}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group focused">
+                                                                <label class="form-control-label"
+                                                                       for="input-password_confirmation">password
+                                                                    confirmation</label>
+                                                                <input type="password" id="input-password_confirmation"
+                                                                       name="password_confirmation"
+                                                                       class="form-control form-control-alternative"
+                                                                       placeholder="password"
+                                                                       value="{{old('password_confirmation')}}">
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </form>
-                                            </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div style="" align="right" class="form-group">
+                                                        <button type="submit" class="btn btn-info">Edit</button>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -203,12 +206,104 @@
                 </div>
             </div>
         </div>
+        </div>
     </section>
 
 @endsection
 
 @section('css')
     <style>
+
+        body {
+            background: whitesmoke;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 20px;
+            text-align: center;
+            margin: 20px 0 20px;
+        }
+
+        h1 small {
+            display: block;
+            font-size: 15px;
+            padding-top: 8px;
+            color: gray;
+        }
+
+        .avatar-upload {
+            position: relative;
+            max-width: 205px;
+            margin: 50px auto;
+        }
+
+        .avatar-upload .avatar-edit {
+            position: absolute;
+            right: 12px;
+            z-index: 1;
+            top: 10px;
+        }
+
+        .avatar-upload .avatar-edit input {
+            display: none;
+        }
+
+        .avatar-upload .avatar-edit input + label {
+            display: inline-block;
+            width: 34px;
+            height: 34px;
+            margin-bottom: 0;
+            border-radius: 100%;
+            background: #FFFFFF;
+            border: 1px solid transparent;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+            font-weight: normal;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .avatar-upload .avatar-edit input + label:hover {
+            background: #f1f1f1;
+            border-color: #d6d6d6;
+        }
+
+        .avatar-upload .avatar-edit input + label:after {
+            content: "\f040";
+            font-family: 'FontAwesome';
+            color: #757575;
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            margin: auto;
+        }
+
+        .avatar-upload .avatar-preview {
+            width: 192px;
+            height: 192px;
+            position: relative;
+            border-radius: 100%;
+            border: 6px solid #F8F8F8;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar-upload .avatar-preview > div {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
         :root {
             --blue: #5e72e4;
             --indigo: #5603ad;
@@ -1202,7 +1297,6 @@
             /*.navbar-expand-md .navbar-nav .dropdown-menu {*/
             /*    position: absolute;*/
             /*}*/
-
             .navbar-expand-md .navbar-nav .nav-link {
                 padding-right: 1rem;
                 padding-left: 1rem;
@@ -2110,7 +2204,6 @@
             /*    pointer-events: none;*/
             /*    opacity: 100;*/
             /*}*/
-
             /*.navbar .dropdown-menu-arrow:before {*/
             /*    position: absolute;*/
             /*    z-index: -5;*/
@@ -2125,12 +2218,10 @@
             /*    background: #fff;*/
             /*    box-shadow: none;*/
             /*}*/
-
             /*.navbar .dropdown-menu-right:before {*/
             /*    right: 20px;*/
             /*    left: auto;*/
             /*}*/
-
             @keyframes show-navbar-dropdown {
                 0% {
                     transition: visibility .25s, opacity .25s, transform .25s;

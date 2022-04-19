@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/events', '\App\Http\Controllers\EventController@index')->name('events');
     Route::post('fullcalenderAjax',  '\App\Http\Controllers\EventController@ajax');
 
+    Route::get('/calc', '\App\Http\Controllers\Dashboard\PageUserController@calc')->name('calc');
 });
 Auth::routes();
 
