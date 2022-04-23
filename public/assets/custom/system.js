@@ -1,16 +1,15 @@
 $(document).ready(function () {
     $('.absence').hide();
-    $('.presence').on('click', function (e) {
+    $('#prence').submit( function (e) {
         e.preventDefault();
         $('.absence').show();
-        $(this).hide();
+        $('.presence').hide();
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var d = new Date();
         var dayName = days[d.getDay()];
         var name = $(this).data('name');
         var phone = $(this).data('phone');
         var email = $(this).data('email');
-
 
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -23,41 +22,41 @@ $(document).ready(function () {
         today = mm + '-' + dd + '-' + yyyy + ' ' + hh + ':' + m + ':' + ss;
 
         var html = `
-  <tr class="table-info">
-      <td class="text-bold-500">${name}</td>
-      <td>${email}</td>
-      <td class="text-bold-500">${phone}</td>
-      <td>${today}</td>
-      <td>-</td>
-      <td>${dayName}</td>
-  </tr>
+              <tr class="table-info">
+                  <td class="text-bold-500">presence</td>
+                  <td>${today}</td>
+                  <td>${dayName}</td>
+              </tr>
         `;
+
+        let formData = new FormData(this);
+
         var url = '/store';
         $.ajax({
-            url: url,
             type: 'POST',
-            data: {
-                name: name,
-                email: email,
-                phone: phone,
-                _token: $('#token1').val(),
-            },
-            dataType: 'json',
-            success: function (result) {
+            url: url,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (response) => {
+                if (response) {
+                    this.reset();
+                    console.log('Image has been uploaded successfully');
+                }
                 $('.user_table').append(html);
             },
-            error: function (result) {
-                console.log("===== " + result + "error");
+            error: function (response) {
+                console.log(response);
             }
         });
 
 
     });
 
-    $('.absence').on('click', function (e) {
+    $('#abrence').submit(function (e) {
         e.preventDefault();
 
-        $(this).hide();
+        // $('.absence').hide();
 
         $('.presence').show();
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -79,34 +78,34 @@ $(document).ready(function () {
         today = mm + '-' + dd + '-' + yyyy + ' ' + hh + ':' + m + ':' + ss;
 
         var html = `
-  <tr class="table-info">
-      <td class="text-bold-500">${name}</td>
-      <td>${email}</td>
-      <td class="text-bold-500">${phone}</td>
-      <td>-</td>
-      <td>${today}</td>
-      <td>${dayName}</td>
-  </tr>
+              <tr class="table-info">
+                  <td class="text-bold-500">absence</td>
+                  <td>${today}</td>
+                  <td>${dayName}</td>
+              </tr>
         `;
+
+        let formData = new FormData(this);
+
         var url = '/save';
         $.ajax({
-            url: url,
             type: 'POST',
-            data: {
-                name: name,
-                email: email,
-                phone: phone,
-                _token: $('#token2').val(),
-            },
-            dataType: 'json',
-            success: function (result) {
+            url: url,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (response) => {
+                if (response) {
+                    this.reset();
+                    console.log('Image has been uploaded successfully');
+                }
                 $('.user_table').append(html);
-
             },
-            error: function (result) {
-                console.log("===== " + result + "error");
+            error: function (response) {
+                console.log(response);
             }
         });
+
 
     });
 
@@ -114,17 +113,18 @@ $(document).ready(function () {
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+            reader.onload = function (e) {
+                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
                 $('#imagePreview').hide();
                 $('#imagePreview').fadeIn(650);
             }
             reader.readAsDataURL(input.files[0]);
         }
     }
-    $("#imageUpload").change(function() {
+
+    $("#imageUpload").change(function () {
         readURL(this);
     });
 
 
-    });
+});

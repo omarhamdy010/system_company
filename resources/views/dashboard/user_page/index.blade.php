@@ -48,35 +48,25 @@
                             @if(auth()->user()->status==0)
                                 <span style="background: red ;color: white ;text-align: center"> wait until admin accept you......</span>
                             @else
-                                <form method="post" action="{{route('presence.store')}}">
+                                <form method="post" action="{{route('presence.store')}}" id="prence">
                                     @method('POST')
 
                                     <input type="hidden" name="_token" id="token1" value="{{csrf_token()}}">
-                                    <input type="hidden" name="name" value="{{auth()->user()->name}}">
-                                    <input type="hidden" name="phone" value="{{auth()->user()->phone}}">
-                                    <input type="hidden" name="status" value="{{auth()->user()->status}}">
+                                    <input type="hidden" name="type" value="presence">
                                     <input type="hidden" name="id" value="{{auth()->user()->id}}">
-                                    <input type="hidden" name="email" value="{{auth()->user()->email}}">
                                     <button type="submit" class="btn btn-success btn-sm presence"
-                                            data-name="{{auth()->user()->name}}"
-                                            data-phone="{{auth()->user()->phone}}"
-                                            data-email="{{auth()->user()->email}}"
+                                            data-type="presence"
                                             data-id="{{auth()->user()->id}}"
                                     >حضور
                                     </button>
                                 </form>
-                                <form method="post" action="{{route('presence.save')}}">
+                                <form method="post" action="{{route('presence.save')}}" id="abrence">
                                     @method('POST')
                                     <input type="hidden" name="_token" id="token2" value="{{csrf_token()}}">
-                                    <input type="hidden" name="name" value="{{auth()->user()->name}}">
-                                    <input type="hidden" name="phone" value="{{auth()->user()->phone}}">
-                                    <input type="hidden" name="status" value="{{auth()->user()->status}}">
+                                    <input type="hidden" name="type" value="absence">
                                     <input type="hidden" name="id" value="{{auth()->user()->id}}">
-                                    <input type="hidden" name="email" value="{{auth()->user()->email}}">
                                     <button type="submit" class="btn btn-danger btn-sm absence"
-                                            data-name="{{auth()->user()->name}}"
-                                            data-phone="{{auth()->user()->phone}}"
-                                            data-email="{{auth()->user()->email}}"
+                                            data-type="absence"
                                             data-id="{{auth()->user()->id}}"
                                     >انصراف
                                     </button>
@@ -84,6 +74,7 @@
                             @endif
 
                         </div>
+                        @if(auth()->user()->status==1)
                         <section class="section">
                             <div class="row" id="table-contexual">
                                 <div class="col-12">
@@ -97,11 +88,8 @@
                                                 <table class="table mb-0">
                                                     <thead>
                                                     <tr>
-                                                        <th>الاسم</th>
-                                                        <th>الايميل</th>
-                                                        <th>رقم الهاتف</th>
-                                                        <th>وقت الحضور</th>
-                                                        <th>وقت الانصراف</th>
+                                                        <th>النوع</th>
+                                                        <th>وقت</th>
                                                         <th>اليوم</th>
                                                     </tr>
                                                     </thead>
@@ -110,11 +98,8 @@
                                                     >
                                                     @foreach($presence_users as $presence_user )
                                                         <tr class="table-info">
-                                                            <td class="text-bold-500">{{$presence_user->name}}</td>
-                                                            <td>{{$presence_user->email}}</td>
-                                                            <td class="text-bold-500">{{$presence_user->phone}}</td>
-                                                            <td>{{$presence_user->presence_time}}</td>
-                                                            <td>{{$presence_user->absence_time}}</td>
+                                                            <td>{{$presence_user->type}}</td>
+                                                            <td>{{$presence_user->time}}</td>
                                                             <td>{{$presence_user->day}}</td>
                                                         </tr>
                                                     @endforeach
@@ -126,6 +111,7 @@
                                 </div>
                             </div>
                         </section>
+                            @endif
                     </div>
                 </div>
             </div>

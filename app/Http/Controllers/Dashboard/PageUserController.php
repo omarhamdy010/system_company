@@ -14,67 +14,85 @@ class PageUserController extends Controller
 {
     public function index()
     {
-        $presence_users = PageUser::where('user_id',auth()->user()->id)->get();
+        $presence_users = PageUser::where('user_id', auth()->user()->id)->get();
         return view('/dashboard.user_page.index', compact('presence_users'));
     }
 
     public function store(User $user, Request $request)
     {
-        $pageuser = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'user_id' =>auth()->user()->id,
-            'presence_time' => '-',
-            'absence_time' => '-',
-            'day'=>'-',
-        ];
+        $page = PageUser::where(['type' => 'presence', 'day' => \Illuminate\Support\Carbon::today()->format('l'), 'user_id' => auth()->user()->id])->latest()->first();
+        if(is_null($page)){
 
-        $pag = PageUser::create($pageuser);
-        $pageuser = [
-            'presence_time' => $pag->created_at,
-            'day'=>\Illuminate\Support\Carbon::today()->format('l'),
-        ];
+            $pageuser = [
+                'user_id' => auth()->user()->id,
+                'type' => 'presence',
+                'time' => '-',
+                'day' => '-',
+            ];
 
-        $pag->update($pageuser);
+            $pag = PageUser::create($pageuser);
+            $pageuser = [
+                'time' => $pag->created_at,
+                'day' => \Illuminate\Support\Carbon::today()->format('l'),
+            ];
 
 
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Data inserted successfully'
-            ]
-        );
+            $pag->update($pageuser);
+
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Data inserted successfully'
+                ]);
+        }
     }
 
 
-    public function save(User $user, Request $request)
+    public function save(Request $request)
     {
-        $pageuser = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'user_id' =>auth()->user()->id,
-            'presence_time' => '-',
-            'absence_time' => '-',
-            'day'=>'-',
-        ];
+//        dd($request->all());
+        $page = PageUser::where(['type' => 'absence', 'day' => \Illuminate\Support\Carbon::today()->format('l'), 'user_id' => auth()->user()->id])->latest()->first();
+        if (is_null($page)) {
+            $pageuser = [
+                'user_id' => auth()->user()->id,
+                'type' => 'absence',
+                'time' => '-',
+                'day' => '-',
+            ];
+            $pag = PageUser::create($pageuser);
+            $pageuser = [
+                'time' => $pag->updated_at,
+                'day' => \Illuminate\Support\Carbon::today()->format('l'),
+            ];
 
-        $pag = PageUser::create($pageuser);
-        $pageuser = [
-            'absence_time' => $pag->created_at,
-            'day'=>\Illuminate\Support\Carbon::today()->format('l'),
 
-        ];
+            $pag->update($pageuser);
 
-        $pag->update($pageuser);
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Data inserted successfully'
+                ]);
+        }else{
 
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Data inserted successfully'
-            ]
-        );    }
+            $pageuser = [
+                'time' => $page->updated_at,
+                'day' => \Illuminate\Support\Carbon::today()->format('l'),
+            ];
+
+
+            $page->update($pageuser);
+
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Data inserted successfully'
+                ]);
+        }
+    }
+
+
+
 
     public function profile()
     {
@@ -97,7 +115,7 @@ class PageUserController extends Controller
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
-            'password'=>Hash::make($request->password)
+            'password' => Hash::make($request->password)
         ]);
 
         return redirect()->back();
@@ -124,19 +142,21 @@ class PageUserController extends Controller
         return redirect()->back();
     }
 
-    public function destroy($id){
-        $user =User::find($id);
+    public function destroy($id)
+    {
+        $user = User::find($id);
         if ($user->image != 'default.png') {
             Storage::disk('public_uploads')->delete('/user/' . $user->image);
         }
         $user->update([
-            'image'=>'default.png'
+            'image' => 'default.png'
         ]);
         return redirect()->back();
     }
 
-    public function calc(){
-        $x = PageUser::where('user_id',auth()->user()->id)->get();
+    public function calc()
+    {
+        $x = PageUser::where('user_id', auth()->user()->id)->get();
         dd($x);
     }
 
