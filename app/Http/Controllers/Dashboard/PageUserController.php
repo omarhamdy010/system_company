@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PageUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -154,10 +155,15 @@ class PageUserController extends Controller
         return redirect()->back();
     }
 
-    public function calc()
-    {
-        $x = PageUser::where('user_id', auth()->user()->id)->get();
-        dd($x);
+    //this function to return time by minutes
+    public function calc(){
+        $pageUser = PageUser::where('user_id',auth()->user()->id)->first();
+        $now = Carbon::now();
+        $created_at = Carbon::parse($pageUser['created_at']);
+//        $diffHuman = $created_at->diffForHumans($now);  // 3 Months ago
+//        $diffHours = $created_at->diffInHours($now);  // 3
+        $diffMinutes = $created_at->diffInMinutes($now);  // 180
+        return $diffMinutes ;
     }
 
 }
