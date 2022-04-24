@@ -7,9 +7,6 @@ $(document).ready(function () {
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var d = new Date();
         var dayName = days[d.getDay()];
-        var name = $(this).data('name');
-        var phone = $(this).data('phone');
-        var email = $(this).data('email');
 
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -56,7 +53,7 @@ $(document).ready(function () {
     $('#abrence').submit(function (e) {
         e.preventDefault();
 
-        // $('.absence').hide();
+        $('.absence').hide();
 
         $('.presence').show();
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

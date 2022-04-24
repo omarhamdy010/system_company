@@ -45,12 +45,12 @@
                                 <p>{{__('site.home')}}</p>
                             </a>
                         </li>
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="../../index2.html" class="nav-link">--}}
-{{--                                <i class="far fa-circle nav-icon"></i>--}}
-{{--                                <p>Dashboard v2</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
+                        <li class="nav-item">
+                            <a href="{{route('calender')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Calender</p>
+                            </a>
+                        </li>
 {{--                        <li class="nav-item">--}}
 {{--                            <a href="../../index3.html" class="nav-link">--}}
 {{--                                <i class="far fa-circle nav-icon"></i>--}}

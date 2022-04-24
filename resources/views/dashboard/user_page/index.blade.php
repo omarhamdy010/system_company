@@ -72,46 +72,7 @@
                                     </button>
                                 </form>
                             @endif
-
                         </div>
-                        @if(auth()->user()->status==1)
-                        <section class="section">
-                            <div class="row" id="table-contexual">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title">presence and absence</h4>
-                                        </div>
-                                        <div class="card-content">
-                                            <!-- table contextual / colored -->
-                                            <div class="table-responsive">
-                                                <table class="table mb-0">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>النوع</th>
-                                                        <th>وقت</th>
-                                                        <th>اليوم</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody
-                                                        class="user_table"
-                                                    >
-                                                    @foreach($presence_users as $presence_user )
-                                                        <tr class="table-info">
-                                                            <td>{{$presence_user->type}}</td>
-                                                            <td>{{$presence_user->time}}</td>
-                                                            <td>{{$presence_user->day}}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                            @endif
                     </div>
                 </div>
             </div>
