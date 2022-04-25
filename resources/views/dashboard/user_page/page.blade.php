@@ -1,11 +1,12 @@
 @extends('dashboard.layout.main')
+
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-{{--                <div class="col-sm-6">--}}
-{{--                    <h1>User Profile Card</h1>--}}
-{{--                </div>--}}
+                {{--                <div class="col-sm-6">--}}
+                {{--                    <h1>User Profile Card</h1>--}}
+                {{--                </div>--}}
                 <div class="col-sm-6">
                     {{--                        <ol class="breadcrumb float-sm-right">--}}
                     {{--                            <li class="breadcrumb-item"><a href="#">Home</a></li>--}}
@@ -40,70 +41,6 @@
                         </div>
                         <div class="main-content">
                             <!-- Top navbar -->
-                            <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-                                <div class="container-fluid">
-                                    <!-- Brand -->
-{{--                                    <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"--}}
-{{--                                       href="https://www.creative-tim.com/product/argon-dashboard" target="_blank">User--}}
-{{--                                        profile</a>--}}
-                                    <!-- Form -->
-{{--                                    <form--}}
-{{--                                        class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">--}}
-{{--                                        <div class="form-group mb-0">--}}
-{{--                                            <div class="input-group input-group-alternative">--}}
-{{--                                                <div class="input-group-prepend">--}}
-{{--                                                    <span class="input-group-text"><i class="fas fa-search"></i></span>--}}
-{{--                                                </div>--}}
-{{--                                                <input class="form-control" placeholder="Search" type="text">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </form>--}}
-                                    <!-- User -->
-{{--                                    <ul class="navbar-nav align-items-center d-none d-md-flex">--}}
-{{--                                        <li class="nav-item dropdown">--}}
-{{--                                            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown"--}}
-{{--                                               aria-haspopup="true" aria-expanded="false">--}}
-{{--                                                <div class="media align-items-center">--}}
-{{--                <span class="avatar avatar-sm rounded-circle">--}}
-{{--                  <img alt="Image placeholder"--}}
-{{--                       src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg">--}}
-{{--                </span>--}}
-{{--                                                    <div class="media-body ml-2 d-none d-lg-block">--}}
-{{--                                                        <span--}}
-{{--                                                            class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </a>--}}
-{{--                                            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">--}}
-{{--                                                <div class=" dropdown-header noti-title">--}}
-{{--                                                    <h6 class="text-overflow m-0">Welcome!</h6>--}}
-{{--                                                </div>--}}
-{{--                                                <a href="../examples/profile.html" class="dropdown-item">--}}
-{{--                                                    <i class="ni ni-single-02"></i>--}}
-{{--                                                    <span>My profile</span>--}}
-{{--                                                </a>--}}
-{{--                                                <a href="../examples/profile.html" class="dropdown-item">--}}
-{{--                                                    <i class="ni ni-settings-gear-65"></i>--}}
-{{--                                                    <span>Settings</span>--}}
-{{--                                                </a>--}}
-{{--                                                <a href="../examples/profile.html" class="dropdown-item">--}}
-{{--                                                    <i class="ni ni-calendar-grid-58"></i>--}}
-{{--                                                    <span>Activity</span>--}}
-{{--                                                </a>--}}
-{{--                                                <a href="../examples/profile.html" class="dropdown-item">--}}
-{{--                                                    <i class="ni ni-support-16"></i>--}}
-{{--                                                    <span>Support</span>--}}
-{{--                                                </a>--}}
-{{--                                                <div class="dropdown-divider"></div>--}}
-{{--                                                <a href="#!" class="dropdown-item">--}}
-{{--                                                    <i class="ni ni-user-run"></i>--}}
-{{--                                                    <span>Logout</span>--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-                                </div>
-                            </nav>
                             <!-- Header -->
                             <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
                                  style="min-height: 600px; background-image: url(https://raw.githubusercontent.com/creativetimofficial/argon-dashboard/gh-pages/assets-old/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
@@ -114,10 +51,10 @@
                                     <div class="row">
                                         <div class="col-lg-7 col-md-10">
                                             <h1 class="display-2 text-white">Hello {{auth()->user()->name}}</h1>
-{{--                                            <p class="text-white mt-0 mb-5">This is your profile page. You can see the--}}
-{{--                                                progress you've made with your work and manage your projects or assigned--}}
-{{--                                                tasks</p>--}}
-{{--                                            <a href="#!" class="btn btn-info">Edit profile</a>--}}
+                                            {{--                                            <p class="text-white mt-0 mb-5">This is your profile page. You can see the--}}
+                                            {{--                                                progress you've made with your work and manage your projects or assigned--}}
+                                            {{--                                                tasks</p>--}}
+                                            {{--                                            <a href="#!" class="btn btn-info">Edit profile</a>--}}
                                         </div>
                                     </div>
                                 </div>
@@ -127,135 +64,139 @@
                                 <div class="row">
                                     <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                                         <div class="card card-profile shadow">
-                                            <div class="row justify-content-center">
-                                                <div class="col-lg-3 order-lg-2">
-                                                    <div class="card-profile-image">
-                                                            <img src="{{auth()->user()->image_path}}"
-                                                                class="rounded-circle">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="">
-                                                <div class="d-flex justify-content-between">
-                                                    <a href="#" class="btn btn-sm"></a>
-                                                </div>
-                                            </div>
-                                            <div class="card-body pt-0 pt-md-4">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div
-                                                            class="card-profile-stats d-flex justify-content-center mt-md-5">
-                                                            <div>
 
-                                                            </div>
+                                            <form method="post"
+                                                  action="{{route('updateimage',['id'=>auth()->user()->id])}}"
+                                                  enctype="multipart/form-data">
+                                                @method('PUT')
+                                                <div class="avatar-upload">
+                                                    <div class="avatar-edit">
+                                                        <input type='file' name="image" id="imageUpload"
+                                                               accept=".png, .jpg, .jpeg"/>
+                                                        <label for="imageUpload"></label>
+                                                    </div>
+                                                    <div class="avatar-preview">
+                                                        <div id="imagePreview"
+                                                             style="background-image: url({{auth()->user()->image_Path}});">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
-                                                    <div class="h5 font-weight-300">
-                                                        <form method="post" action="{{route('updateimage',['id'=>auth()->user()->id])}}" enctype="multipart/form-data">
-                                                            @method('PUT')
-                                                            @csrf
-                                                            <input type="file" name="image">
-                                                            <input type="submit" value="Upload">
-                                                        </form>
+                                                <div class="text-center parent">
+                                                    <div class="h5 font-weight-300 child">
+
+                                                        <input type="hidden" name="_token" id="token2"
+                                                               value="{{csrf_token()}}">
+                                                        {{--                                                                <span class="btn btn-primary btn-file">Browse...<input type="file" name="image" id="request_image"></span>--}}
+                                                        {{--                                                                <hr class="my-4">--}}
+                                                        <div>
+                                                            <i class="ni education_hat mr-2"></i>{{auth()->user()->email}}
+                                                        </div>
+                                                        <hr class="my-4">
+                                                        <h3>
+                                                            {{auth()->user()->name}}
+                                                        </h3>
+                                                        <hr class="my-4">
+                                                        <div class="h5 font-weight-300">
+                                                            <i class="ni location_pin mr-2"></i>{{auth()->user()->phone}}
+                                                        </div>
+                                                        <hr class="my-4">
+                                                        <button type="submit" data-id="{{auth()->user()->id}}"
+                                                                data-image="{{auth()->user()->image}}"
+                                                                class="btn btn-primary btn-sm image_profile">Upload
+                                                            photo
+                                                        </button>
                                                     </div>
-                                                    <div class="h5 font-weight-300">
-                                                        <form method="post" action="{{route('deleteimage',['id'=>auth()->user()->id])}}" enctype="multipart/form-data">
-                                                            @method('Delete')
-                                                            @csrf
-                                                            <input type="submit" value="Delete">
-                                                        </form>
-                                                    </div>
-                                                    <hr class="my-4">
-                                                    <div>
-                                                        <i class="ni education_hat mr-2"></i>{{auth()->user()->email}}
-                                                    </div>
-                                                    <hr class="my-4">
-                                                    <h3>
-                                                        {{auth()->user()->name}}
-                                                    </h3>
-                                                    <hr class="my-4">
-                                                    <div class="h5 font-weight-300">
-                                                        <i class="ni location_pin mr-2"></i>{{auth()->user()->phone}}
-                                                    </div>
-                                                </div>
+                                            </form>
+                                            <div class='child'>
+                                                <form method="post"
+                                                      action="{{route('deleteimage',['id'=>auth()->user()->id])}}"
+                                                      enctype="multipart/form-data">
+                                                    @method('Delete')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-primary btn-sm ">Delete photo
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-8 order-xl-1">
-                                        <div class="card bg-secondary shadow">
-                                            <div class="card-header bg-white border-0">
-                                                <div class="row align-items-center">
-                                                    <div class="col-8">
-                                                        <h3 class="mb-0">My account</h3>
-                                                    </div>
-                                                    <div class="col-4 text-right">
-                                                        {{--                                                        <a href="#!" class="btn btn-sm btn-primary">Settings</a>--}}
-                                                    </div>
+                                </div>
+                                <div class="col-xl-8 order-xl-1">
+                                    <div class="card bg-secondary shadow">
+                                        <div class="card-header bg-white border-0">
+                                            <div class="row align-items-center">
+                                                <div class="col-8">
+                                                    <h3 class="mb-0">My account</h3>
                                                 </div>
                                             </div>
-                                            <div class="card-body">
-                                                <form method="post" action="{{route('updateprofile',['id'=>auth()->user()->id])}}">
-                                                    @method('PUT')
-                                                    @csrf
-                                                    <h6 class="heading-small text-muted mb-4">User information</h6>
-                                                    <div class="pl-lg-4">
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group focused">
-                                                                    <label class="form-control-label"
-                                                                           for="input-username">name</label>
-                                                                    <input type="text" id="input-username" name="name"
-                                                                           class="form-control form-control-alternative"
-                                                                           placeholder="Username"
-                                                                           value="{{old('name')}}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group">
-                                                                    <label class="form-control-label" for="input-email">Email
-                                                                        address</label>
-                                                                    <input type="email" id="input-email" name="email"
-                                                                           class="form-control form-control-alternative"
-                                                                           placeholder="email">
-                                                                </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <form method="post"
+                                                  action="{{route('updateprofile',['id'=>auth()->user()->id])}}">
+                                                @method('PUT')
+                                                @csrf
+                                                <h6 class="heading-small text-muted mb-4">User information</h6>
+                                                <div class="pl-lg-4">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group focused">
+                                                                <label class="form-control-label"
+                                                                       for="input-username">name</label>
+                                                                <input type="text" id="input-username" name="name"
+                                                                       class="form-control form-control-alternative"
+                                                                       placeholder="Username"
+                                                                       value="{{old('name')}}">
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group focused">
-                                                                    <label class="form-control-label" for="input-phone">phone</label>
-                                                                    <input type="text" id="input-phone" name="phone"
-                                                                           class="form-control form-control-alternative"
-                                                                           placeholder="phone" value="{{old('phone')}}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group focused">
-                                                                    <label class="form-control-label" for="input-pass">password</label>
-                                                                    <input type="password" id="input-pass" name="password"
-                                                                           class="form-control form-control-alternative"
-                                                                           placeholder="password" value="{{old('password')}}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="form-group focused">
-                                                                    <label class="form-control-label" for="input-password_confirmation">password confirmation</label>
-                                                                    <input type="password" id="input-password_confirmation" name="password_confirmation"
-                                                                           class="form-control form-control-alternative"
-                                                                           placeholder="password" value="{{old('password_confirmation')}}">
-                                                                </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="form-control-label" for="input-email">Email
+                                                                    address</label>
+                                                                <input type="email" id="input-email" name="email"
+                                                                       class="form-control form-control-alternative"
+                                                                       placeholder="email">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <div style="" align="right" class="form-group">
-                                                            <button type="submit" class="btn btn-info">Edit</button>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group focused">
+                                                                <label class="form-control-label"
+                                                                       for="input-phone">phone</label>
+                                                                <input type="text" id="input-phone" name="phone"
+                                                                       class="form-control form-control-alternative"
+                                                                       placeholder="phone" value="{{old('phone')}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group focused">
+                                                                <label class="form-control-label"
+                                                                       for="input-pass">password</label>
+                                                                <input type="password" id="input-pass" name="password"
+                                                                       class="form-control form-control-alternative"
+                                                                       placeholder="password"
+                                                                       value="{{old('password')}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group focused">
+                                                                <label class="form-control-label"
+                                                                       for="input-password_confirmation">password
+                                                                    confirmation</label>
+                                                                <input type="password" id="input-password_confirmation"
+                                                                       name="password_confirmation"
+                                                                       class="form-control form-control-alternative"
+                                                                       placeholder="password"
+                                                                       value="{{old('password_confirmation')}}">
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </form>
-                                            </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div style="" align="right" class="form-group">
+                                                        <button type="submit" class="btn btn-info">Edit</button>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -265,12 +206,104 @@
                 </div>
             </div>
         </div>
+        </div>
     </section>
 
 @endsection
 
 @section('css')
     <style>
+
+        body {
+            background: whitesmoke;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 20px;
+            text-align: center;
+            margin: 20px 0 20px;
+        }
+
+        h1 small {
+            display: block;
+            font-size: 15px;
+            padding-top: 8px;
+            color: gray;
+        }
+
+        .avatar-upload {
+            position: relative;
+            max-width: 205px;
+            margin: 50px auto;
+        }
+
+        .avatar-upload .avatar-edit {
+            position: absolute;
+            right: 12px;
+            z-index: 1;
+            top: 10px;
+        }
+
+        .avatar-upload .avatar-edit input {
+            display: none;
+        }
+
+        .avatar-upload .avatar-edit input + label {
+            display: inline-block;
+            width: 34px;
+            height: 34px;
+            margin-bottom: 0;
+            border-radius: 100%;
+            background: #FFFFFF;
+            border: 1px solid transparent;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+            font-weight: normal;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .avatar-upload .avatar-edit input + label:hover {
+            background: #f1f1f1;
+            border-color: #d6d6d6;
+        }
+
+        .avatar-upload .avatar-edit input + label:after {
+            content: "\f040";
+            font-family: 'FontAwesome';
+            color: #757575;
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            margin: auto;
+        }
+
+        .avatar-upload .avatar-preview {
+            width: 192px;
+            height: 192px;
+            position: relative;
+            border-radius: 100%;
+            border: 6px solid #F8F8F8;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar-upload .avatar-preview > div {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
         :root {
             --blue: #5e72e4;
             --indigo: #5603ad;
@@ -1015,44 +1048,44 @@
             position: relative;
         }
 
-        .dropdown-menu {
-            font-size: 1rem;
-            position: absolute;
-            z-index: 1000;
-            top: 100%;
-            left: 0;
-            display: none;
-            float: left;
-            min-width: 10rem;
-            margin: .125rem 0 0;
-            padding: .5rem 0;
-            list-style: none;
-            text-align: left;
-            color: #525f7f;
-            border: 0 solid rgba(0, 0, 0, .15);
-            border-radius: .4375rem;
-            background-color: #fff;
-            background-clip: padding-box;
-            box-shadow: 0 50px 100px rgba(50, 50, 93, .1), 0 15px 35px rgba(50, 50, 93, .15), 0 5px 15px rgba(0, 0, 0, .1);
-        }
+        /*.dropdown-menu {*/
+        /*    font-size: 1rem;*/
+        /*    position: absolute;*/
+        /*    z-index: 1000;*/
+        /*    top: 100%;*/
+        /*    left: 0;*/
+        /*    display: none;*/
+        /*    float: left;*/
+        /*    min-width: 10rem;*/
+        /*    margin: .125rem 0 0;*/
+        /*    padding: .5rem 0;*/
+        /*    list-style: none;*/
+        /*    text-align: left;*/
+        /*    color: #525f7f;*/
+        /*    border: 0 solid rgba(0, 0, 0, .15);*/
+        /*    border-radius: .4375rem;*/
+        /*    background-color: #fff;*/
+        /*    background-clip: padding-box;*/
+        /*    box-shadow: 0 50px 100px rgba(50, 50, 93, .1), 0 15px 35px rgba(50, 50, 93, .15), 0 5px 15px rgba(0, 0, 0, .1);*/
+        /*}*/
 
-        .dropdown-menu.show {
-            display: block;
-            opacity: 1;
-        }
+        /*.dropdown-menu.show {*/
+        /*    display: block;*/
+        /*    opacity: 1;*/
+        /*}*/
 
-        .dropdown-menu-right {
-            right: 0;
-            left: auto;
-        }
+        /*.dropdown-menu-right {*/
+        /*    right: 0;*/
+        /*    left: auto;*/
+        /*}*/
 
-        .dropdown-menu[x-placement^='top'],
-        .dropdown-menu[x-placement^='right'],
-        .dropdown-menu[x-placement^='bottom'],
-        .dropdown-menu[x-placement^='left'] {
-            right: auto;
-            bottom: auto;
-        }
+        /*.dropdown-menu[x-placement^='top'],*/
+        /*.dropdown-menu[x-placement^='right'],*/
+        /*.dropdown-menu[x-placement^='bottom'],*/
+        /*.dropdown-menu[x-placement^='left'] {*/
+        /*    right: auto;*/
+        /*    bottom: auto;*/
+        /*}*/
 
         .dropdown-divider {
             overflow: hidden;
@@ -1207,22 +1240,22 @@
             text-decoration: none;
         }
 
-        .navbar {
-            position: relative;
-            display: flex;
-            padding: 1rem 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-        }
+        /*.navbar {*/
+        /*    position: relative;*/
+        /*    display: flex;*/
+        /*    padding: 1rem 1rem;*/
+        /*    flex-wrap: wrap;*/
+        /*    align-items: center;*/
+        /*    justify-content: space-between;*/
+        /*}*/
 
-        .navbar > .container,
-        .navbar > .container-fluid {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-        }
+        /*.navbar > .container,*/
+        /*.navbar > .container-fluid {*/
+        /*    display: flex;*/
+        /*    flex-wrap: wrap;*/
+        /*    align-items: center;*/
+        /*    justify-content: space-between;*/
+        /*}*/
 
         .navbar-nav {
             display: flex;
@@ -1237,10 +1270,10 @@
             padding-left: 0;
         }
 
-        .navbar-nav .dropdown-menu {
-            position: static;
-            float: none;
-        }
+        /*.navbar-nav .dropdown-menu {*/
+        /*    position: static;*/
+        /*    float: none;*/
+        /*}*/
 
         @media (max-width: 767.98px) {
 
@@ -1261,10 +1294,9 @@
                 flex-direction: row;
             }
 
-            .navbar-expand-md .navbar-nav .dropdown-menu {
-                position: absolute;
-            }
-
+            /*.navbar-expand-md .navbar-nav .dropdown-menu {*/
+            /*    position: absolute;*/
+            /*}*/
             .navbar-expand-md .navbar-nav .nav-link {
                 padding-right: 1rem;
                 padding-left: 1rem;
@@ -1633,9 +1665,9 @@
                 min-width: 992px !important;
             }
 
-            .navbar {
-                display: none;
-            }
+            /*.navbar {*/
+            /*    display: none;*/
+            /*}*/
         }
 
         figcaption,
@@ -1872,20 +1904,20 @@
             display: inline-block;
         }
 
-        .dropdown-menu {
-            min-width: 12rem;
-        }
+        /*.dropdown-menu {*/
+        /*    min-width: 12rem;*/
+        /*}*/
 
-        .dropdown-menu .dropdown-item {
-            font-size: .875rem;
-            padding: .5rem 1rem;
-        }
+        /*.dropdown-menu .dropdown-item {*/
+        /*    font-size: .875rem;*/
+        /*    padding: .5rem 1rem;*/
+        /*}*/
 
-        .dropdown-menu .dropdown-item > i {
-            font-size: 1rem;
-            margin-right: 1rem;
-            vertical-align: -17%;
-        }
+        /*.dropdown-menu .dropdown-item > i {*/
+        /*    font-size: 1rem;*/
+        /*    margin-right: 1rem;*/
+        /*    vertical-align: -17%;*/
+        /*}*/
 
         .dropdown-header {
             font-size: .625rem;
@@ -1896,18 +1928,18 @@
             color: #f6f9fc;
         }
 
-        .dropdown-menu a.media > div:first-child {
-            line-height: 1;
-        }
+        /*.dropdown-menu a.media > div:first-child {*/
+        /*    line-height: 1;*/
+        /*}*/
 
-        .dropdown-menu a.media p {
-            color: #8898aa;
-        }
+        /*.dropdown-menu a.media p {*/
+        /*    color: #8898aa;*/
+        /*}*/
 
-        .dropdown-menu a.media:hover .heading,
-        .dropdown-menu a.media:hover p {
-            color: #172b4d !important;
-        }
+        /*.dropdown-menu a.media:hover .heading,*/
+        /*.dropdown-menu a.media:hover p {*/
+        /*    color: #172b4d !important;*/
+        /*}*/
 
         .footer {
             padding: 2.5rem 0;
@@ -2167,32 +2199,29 @@
         }
 
         @media (min-width: 768px) {
-            .navbar .dropdown-menu {
-                margin: 0;
-                pointer-events: none;
-                opacity: 0;
-            }
-
-            .navbar .dropdown-menu-arrow:before {
-                position: absolute;
-                z-index: -5;
-                bottom: 100%;
-                left: 20px;
-                display: block;
-                width: 12px;
-                height: 12px;
-                content: '';
-                transform: rotate(-45deg) translateY(12px);
-                border-radius: 2px;
-                background: #fff;
-                box-shadow: none;
-            }
-
-            .navbar .dropdown-menu-right:before {
-                right: 20px;
-                left: auto;
-            }
-
+            /*.navbar .dropdown-menu {*/
+            /*    margin: 0;*/
+            /*    pointer-events: none;*/
+            /*    opacity: 100;*/
+            /*}*/
+            /*.navbar .dropdown-menu-arrow:before {*/
+            /*    position: absolute;*/
+            /*    z-index: -5;*/
+            /*    bottom: 100%;*/
+            /*    left: 20px;*/
+            /*    display: block;*/
+            /*    width: 12px;*/
+            /*    height: 12px;*/
+            /*    content: '';*/
+            /*    transform: rotate(-45deg) translateY(12px);*/
+            /*    border-radius: 2px;*/
+            /*    background: #fff;*/
+            /*    box-shadow: none;*/
+            /*}*/
+            /*.navbar .dropdown-menu-right:before {*/
+            /*    right: 20px;*/
+            /*    left: auto;*/
+            /*}*/
             @keyframes show-navbar-dropdown {
                 0% {
                     transition: visibility .25s, opacity .25s, transform .25s;
@@ -2224,10 +2253,10 @@
                 color: #172b4d !important;
             }
 
-            .navbar-nav .dropdown-menu {
-                min-width: auto;
-                box-shadow: none;
-            }
+            /*.navbar-nav .dropdown-menu {*/
+            /*    min-width: auto;*/
+            /*    box-shadow: none;*/
+            /*}*/
         }
 
         @keyframes show-navbar-collapse {
@@ -2301,9 +2330,9 @@
             }
         }
 
-        #navbar .navbar {
-            margin-bottom: 20px;
-        }
+        /*#navbar .navbar {*/
+        /*    margin-bottom: 20px;*/
+        /*}*/
     </style>
 @endsection
 

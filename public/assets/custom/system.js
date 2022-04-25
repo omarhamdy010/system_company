@@ -1,68 +1,127 @@
 $(document).ready(function () {
-    $('.presence').on('click', function (e) {
+    $('.absence').hide();
+    $('#prence').submit( function (e) {
         e.preventDefault();
-        $(this).hide();
-        // $(this).removeClass('btn-success');
-        // $(this).addClass('btn-secondary disabled');
-        $('.absence').removeClass('btn-secondary disabled');
-        $('.absence').addClass('btn-danger');
+        $('.absence').show();
+        $('.presence').hide();
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var d = new Date();
+        var dayName = days[d.getDay()];
 
-        // var name = $(this).data('name');
-        // var phone = $(this).data('phone');
-        // var email = $(this).data('email');
-        // var id = $(this).data('id');
-        // var tzoffset = (new Date()).getTimezoneOffset() * 60000;
-        // var localISOTime = (new Date(Date.now() - tzoffset))
-        //     .toISOString()
-        //     .slice(0, 19)
-        //     .replace('T', ' ');
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        var ss = String(today.getSeconds()).padStart(2, '0');
+        var hh = String(today.getUTCHours()).padStart(2, '0');
+        var m = String(today.getMinutes()).padStart(2, '0');
 
-        // var dt = new Date();
-        // var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds()+"-"+ dt.getDate() +"/"+dt.getFullYear();
+        today = mm + '-' + dd + '-' + yyyy + ' ' + hh + ':' + m + ':' + ss;
 
-        // var html = `
-        //   <tr class="table-info" id="presence_add_${id}">
-        //     <td class="text-bold-500">${name}</td>
-        //     <td>${email}</td>
-        //     <td class="text-bold-500">${phone}</td>
-        //     <td>${localISOTime}</td>
-        //     <td>${null}</td>
-        //     </tr>`;
-        // $('.user_table').append(html);
+        var html = `
+              <tr class="table-info">
+                  <td class="text-bold-500">presence</td>
+                  <td>${today}</td>
+                  <td>${dayName}</td>
+              </tr>
+        `;
+
+        let formData = new FormData(this);
+
+        var url = '/store';
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (response) => {
+                if (response) {
+                    this.reset();
+                    console.log('Image has been uploaded successfully');
+                }
+                $('.user_table').append(html);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+
 
     });
 
-    $('.absence').on('click', function (e) {
+    $('#abrence').submit(function (e) {
         e.preventDefault();
-        $(this).removeClass('btn-danger');
-        $(this).addClass('btn-secondary disabled');
-        $('.presence').removeClass('btn-secondary disabled');
-        $('.presence').addClass('btn-success');
-        //
-        // var name = $(this).data('name');
-        // var phone = $(this).data('phone');
-        // var email = $(this).data('email');
-        // var id = $(this).data('id');
-        // var tzoffset = (new Date()).getTimezoneOffset() * 60000;
-        // var localISOTime = (new Date(Date.now() - tzoffset))
-        //     .toISOString()
-        //     .slice(0, 19)
-        //     .replace('T', ' ');
-        //
-        // var prences = $('#presence_add_'+id).children('td:nth-child(4)').html();
-        //
-        // $('#presence_add_'+id).remove();
-        // var html = `
-        //   <tr class="table-info" id="presence_add_${id}">
-        //     <td class="text-bold-500">${name}</td>
-        //     <td>${email}</td>
-        //     <td class="text-bold-500">${phone}</td>
-        //     <td>${prences}</td>
-        //     <td>${localISOTime}</td>
-        //     </tr>`;
-        // $('.user_table').append(html);
 
-    })
+        $('.absence').hide();
+
+        $('.presence').show();
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var d = new Date();
+        var dayName = days[d.getDay()];
+        var name = $(this).data('name');
+        var phone = $(this).data('phone');
+        var email = $(this).data('email');
+
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        var ss = String(today.getSeconds()).padStart(2, '0');
+        var hh = String(today.getUTCHours()).padStart(2, '0');
+        var m = String(today.getMinutes()).padStart(2, '0');
+
+        today = mm + '-' + dd + '-' + yyyy + ' ' + hh + ':' + m + ':' + ss;
+
+        var html = `
+              <tr class="table-info">
+                  <td class="text-bold-500">absence</td>
+                  <td>${today}</td>
+                  <td>${dayName}</td>
+              </tr>
+        `;
+
+        let formData = new FormData(this);
+
+        var url = '/save';
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (response) => {
+                if (response) {
+                    this.reset();
+                    console.log('Image has been uploaded successfully');
+                }
+                $('.user_table').append(html);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+
+
+    });
+
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imageUpload").change(function () {
+        readURL(this);
+    });
 
 
 });
