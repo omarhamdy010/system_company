@@ -60,7 +60,7 @@
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->phone}}</td>
                                         <td>
-                                            <input data-id="{{$user->id}}" class="toggle-class" id="this_toggle" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $user->status ? 'checked' : '' }}>
+                                            <input data-id="{{$user->id}}" class="toggle-class this_toggle"  type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $user->status ? 'checked' : '' }}>
                                         </td>
                                         <td><img src="{{$user->image_path}}" width="75px" height="75px"></td>
                                     </tr>
@@ -78,7 +78,7 @@
 
 
 
-        $('#this_toggle').change(function(e) {
+        $('.this_toggle').change(function(e) {
             e.preventDefault();
             var status = $(this).prop('checked') == true ? 1 : 0;
             var user_id = $(this).data('id');
