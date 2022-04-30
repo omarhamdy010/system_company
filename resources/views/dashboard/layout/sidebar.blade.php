@@ -68,6 +68,17 @@
                         </p>
                     </a>
                 </li>
+                @if(auth()->user()->is_admin==1)
+                <li class="nav-item">
+                    <a href="{{route('admin.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Users
+{{--                            <span class="right badge badge-danger">New</span>--}}
+                        </p>
+                    </a>
+                </li>
+                @endif
 {{--                <li class="nav-item menu-open">--}}
 {{--                    <a href="#" class="nav-link active">--}}
 {{--                        <i class="nav-icon fas fa-copy"></i>--}}

@@ -48,29 +48,35 @@
                             @if(auth()->user()->status==0)
                                 <span style="background: red ;color: white ;text-align: center"> wait until admin accept you......</span>
                             @else
-                                <form method="post" action="{{route('presence.store')}}" id="prence">
-                                    @method('POST')
+                                <div style="width:400px;">
+                                    <div style="float: left; width: 40px">
+                                        <form method="post" action="{{route('presence.store')}}" id="prence">
+                                            @method('POST')
 
-                                    <input type="hidden" name="_token" id="token1" value="{{csrf_token()}}">
-                                    <input type="hidden" name="type" value="presence">
-                                    <input type="hidden" name="id" value="{{auth()->user()->id}}">
-                                    <button type="submit" class="btn btn-success btn-sm presence"
-                                            data-type="presence"
-                                            data-id="{{auth()->user()->id}}"
-                                    >حضور
-                                    </button>
-                                </form>
-                                <form method="post" action="{{route('presence.save')}}" id="abrence">
-                                    @method('POST')
-                                    <input type="hidden" name="_token" id="token2" value="{{csrf_token()}}">
-                                    <input type="hidden" name="type" value="absence">
-                                    <input type="hidden" name="id" value="{{auth()->user()->id}}">
-                                    <button type="submit" class="btn btn-danger btn-sm absence"
-                                            data-type="absence"
-                                            data-id="{{auth()->user()->id}}"
-                                    >انصراف
-                                    </button>
-                                </form>
+                                            <input type="hidden" name="_token" id="token1" value="{{csrf_token()}}">
+                                            <input type="hidden" name="type" value="presence">
+                                            <input type="hidden" name="id" value="{{auth()->user()->id}}">
+                                            <button type="submit" class="btn btn-success btn-sm presence {{is_null($page)?'':'disabled'}}"
+                                                    data-type="presence"
+                                                    data-id="{{auth()->user()->id}}"
+                                            >حضور
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div style="float: right; width: 334px">
+                                        <form method="post" action="{{route('presence.save')}}" id="abrence">
+                                            @method('POST')
+                                            <input type="hidden" name="_token" id="token2" value="{{csrf_token()}}">
+                                            <input type="hidden" name="type" value="absence">
+                                            <input type="hidden" name="id" value="{{auth()->user()->id}}">
+                                            <button type="submit" class="btn btn-danger btn-sm absence {{is_null($page)?'disabled':''}}"
+                                                    data-type="absence"
+                                                    data-id="{{auth()->user()->id}}"
+                                            >انصراف
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             @endif
                         </div>
                     </div>

@@ -20,6 +20,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
     Route::resource('/presence', '\App\Http\Controllers\Dashboard\PageUserController');
+    Route::resource('/admin', '\App\Http\Controllers\Dashboard\AdminPageController');
+    Route::get('changeStatus', '\App\Http\Controllers\Dashboard\AdminPageController@changeStatus');
+
     Route::post('/store', '\App\Http\Controllers\Dashboard\PageUserController@store')->name('presence.store');
     Route::post('/save', '\App\Http\Controllers\Dashboard\PageUserController@save')->name('presence.save');
     Route::get('/calender', '\App\Http\Controllers\Dashboard\PageUserController@calender')->name('calender');

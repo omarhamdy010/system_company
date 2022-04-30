@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->unique();
+            $table->boolean('is_admin')->default(0);
             $table->boolean('status')->default(0);
             $table->string('image')->default('default.png');
             $table->timestamp('email_verified_at')->nullable();
@@ -25,6 +26,7 @@ class CreateUsersTable extends Migration
 
             $table->rememberToken();
             $table->timestamps();
+
         });
     }
 

@@ -66,7 +66,7 @@
                                         <div class="card card-profile shadow">
 
                                             <form method="post"
-                                                  action="{{route('updateimage',['id'=>auth()->user()->id])}}"
+                                                  action="{{route('updateprofile',['id'=>auth()->user()->id])}}"
                                                   enctype="multipart/form-data">
                                                 @method('PUT')
                                                 <div class="avatar-upload">
@@ -99,104 +99,104 @@
                                                         <div class="h5 font-weight-300">
                                                             <i class="ni location_pin mr-2"></i>{{auth()->user()->phone}}
                                                         </div>
-                                                        <hr class="my-4">
-                                                        <button type="submit" data-id="{{auth()->user()->id}}"
+                                                        <!-- <hr class="my-4"> -->
+                                                        <!-- <button type="submit" data-id="{{auth()->user()->id}}"
                                                                 data-image="{{auth()->user()->image}}"
                                                                 class="btn btn-primary btn-sm image_profile">Upload
                                                             photo
-                                                        </button>
+                                                        </button> -->
                                                     </div>
-                                            </form>
-                                            <div class='child'>
-                                                <form method="post"
-                                                      action="{{route('deleteimage',['id'=>auth()->user()->id])}}"
-                                                      enctype="multipart/form-data">
-                                                    @method('Delete')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-primary btn-sm ">Delete photo
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-8 order-xl-1">
-                                    <div class="card bg-secondary shadow">
-                                        <div class="card-header bg-white border-0">
-                                            <div class="row align-items-center">
-                                                <div class="col-8">
-                                                    <h3 class="mb-0">My account</h3>
+                                                    <div class='child'>
+                                                        
+                                                    </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
+                                                <div class="col-xl-8 order-xl-1">
+                                                    <div class="card bg-secondary shadow">
+                                                        <div class="card-header bg-white border-0">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-8">
+                                                                    <h3 class="mb-0">My account</h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <!-- <form method="post"
+                                                                action="{{route('updateprofile',['id'=>auth()->user()->id])}}">
+                                                                @method('PUT')
+                                                                @csrf -->
+                                                                <h6 class="heading-small text-muted mb-4">User information</h6>
+                                                                <div class="pl-lg-4">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-6">
+                                                                            <div class="form-group focused">
+                                                                                <label class="form-control-label"
+                                                                                    for="input-username">name</label>
+                                                                                <input type="text" id="input-username" name="name"
+                                                                                    class="form-control form-control-alternative"
+                                                                                    placeholder="Username"
+                                                                                    value="{{old('name')}}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-control-label" for="input-email">Email
+                                                                                    address</label>
+                                                                                <input type="email" id="input-email" name="email"
+                                                                                    class="form-control form-control-alternative"
+                                                                                    placeholder="email">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-lg-6">
+                                                                            <div class="form-group focused">
+                                                                                <label class="form-control-label"
+                                                                                    for="input-phone">phone</label>
+                                                                                <input type="text" id="input-phone" name="phone"
+                                                                                    class="form-control form-control-alternative"
+                                                                                    placeholder="phone" value="{{old('phone')}}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            <div class="form-group focused">
+                                                                                <label class="form-control-label"
+                                                                                    for="input-pass">password</label>
+                                                                                <input type="password" id="input-pass" name="password"
+                                                                                    class="form-control form-control-alternative"
+                                                                                    placeholder="password"
+                                                                                    value="{{old('password')}}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            <div class="form-group focused">
+                                                                                <label class="form-control-label"
+                                                                                    for="input-password_confirmation">password
+                                                                                    confirmation</label>
+                                                                                <input type="password" id="input-password_confirmation"
+                                                                                    name="password_confirmation"
+                                                                                    class="form-control form-control-alternative"
+                                                                                    placeholder="password"
+                                                                                    value="{{old('password_confirmation')}}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-12">
+                                                                    <div style="" align="right" class="form-group">
+                                                                        <button type="submit" class="btn btn-info">Edit</button>
+                                                                    </div>
+                                                                </div>
+                                            </form>
                                             <form method="post"
-                                                  action="{{route('updateprofile',['id'=>auth()->user()->id])}}">
-                                                @method('PUT')
-                                                @csrf
-                                                <h6 class="heading-small text-muted mb-4">User information</h6>
-                                                <div class="pl-lg-4">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group focused">
-                                                                <label class="form-control-label"
-                                                                       for="input-username">name</label>
-                                                                <input type="text" id="input-username" name="name"
-                                                                       class="form-control form-control-alternative"
-                                                                       placeholder="Username"
-                                                                       value="{{old('name')}}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <label class="form-control-label" for="input-email">Email
-                                                                    address</label>
-                                                                <input type="email" id="input-email" name="email"
-                                                                       class="form-control form-control-alternative"
-                                                                       placeholder="email">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group focused">
-                                                                <label class="form-control-label"
-                                                                       for="input-phone">phone</label>
-                                                                <input type="text" id="input-phone" name="phone"
-                                                                       class="form-control form-control-alternative"
-                                                                       placeholder="phone" value="{{old('phone')}}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group focused">
-                                                                <label class="form-control-label"
-                                                                       for="input-pass">password</label>
-                                                                <input type="password" id="input-pass" name="password"
-                                                                       class="form-control form-control-alternative"
-                                                                       placeholder="password"
-                                                                       value="{{old('password')}}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group focused">
-                                                                <label class="form-control-label"
-                                                                       for="input-password_confirmation">password
-                                                                    confirmation</label>
-                                                                <input type="password" id="input-password_confirmation"
-                                                                       name="password_confirmation"
-                                                                       class="form-control form-control-alternative"
-                                                                       placeholder="password"
-                                                                       value="{{old('password_confirmation')}}">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div style="" align="right" class="form-group">
-                                                        <button type="submit" class="btn btn-info">Edit</button>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                                                       action="{{route('deleteimage',['id'=>auth()->user()->id])}}"
+                                                                       enctype="multipart/form-data">
+                                                                       @method('Delete')
+                                                                       @csrf
+                                                                        <button type="submit" class="btn btn-danger ">Delete photo
+                                                                        </button>
+                                                                        </form>  
                                         </div>
                                     </div>
                                 </div>
