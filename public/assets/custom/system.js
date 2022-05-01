@@ -1,9 +1,11 @@
 $(document).ready(function () {
-    $('.absence').hide();
+    // $('.absence').hide();
     $('#prence').submit( function (e) {
         e.preventDefault();
-        $('.absence').show();
-        $('.presence').hide();
+
+        $('.presence').addClass('disabled');
+        $('.absence').removeClass('disabled');
+
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var d = new Date();
         var dayName = days[d.getDay()];
@@ -53,9 +55,6 @@ $(document).ready(function () {
     $('#abrence').submit(function (e) {
         e.preventDefault();
 
-        $('.absence').hide();
-
-        $('.presence').show();
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var d = new Date();
         var dayName = days[d.getDay()];
@@ -122,6 +121,5 @@ $(document).ready(function () {
     $("#imageUpload").change(function () {
         readURL(this);
     });
-
 
 });

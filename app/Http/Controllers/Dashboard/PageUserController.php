@@ -11,8 +11,9 @@ use Illuminate\Support\Carbon;
 class PageUserController extends Controller
 {
     public function index()
-    {
-        return view('/dashboard.user_page.index');
+    {        $page = PageUser::where(['type' => 'presence', 'day' => \Illuminate\Support\Carbon::today()->format('l'), 'user_id' => auth()->user()->id])->latest()->first();
+
+        return view('/dashboard.user_page.index',compact('page'));
     }
 
     public function store(User $user, Request $request)
@@ -99,8 +100,6 @@ class PageUserController extends Controller
         $pageUser = PageUser::where('user_id', auth()->user()->id)->first();
         $now = Carbon::now();
         $created_at = Carbon::parse($pageUser['created_at']);
-//        $diffHuman = $created_at->diffForHumans($now);  // 3 Months ago
-//        $diffHours = $created_at->diffInHours($now);  // 3
         $diffMinutes = $created_at->diffInMinutes($now);  // 180
         return $diffMinutes;
     }

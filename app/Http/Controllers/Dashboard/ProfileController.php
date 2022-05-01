@@ -18,7 +18,8 @@ class ProfileController extends Controller
 
     public function updateprofile(Request $request, $id)
     {
-
+        // dd($request->all());
+        
         $this->validate($request, [
             'name' => 'required|min:3|max:50',
             'email' => 'email',
@@ -27,6 +28,7 @@ class ProfileController extends Controller
             'password_confirmation' => 'min:6'
         ]);
         $user = User::find($id);
+        $data = $request->except(['image']);
 
         $user->update([
             'name' => $request->name,
@@ -34,14 +36,6 @@ class ProfileController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-
-        return redirect()->back();
-    }
-
-    public function updateimage(Request $request, $id)
-    {
-        $user = User::find($id);
-        $data = $request->except(['image']);
 
         if ($request->image) {
             if ($user->image != 'default.png') {
@@ -56,8 +50,30 @@ class ProfileController extends Controller
         } else {
             Auth()->user()->image_path;
         }
+
         return redirect()->back();
     }
+
+    // public function updateimage(Request $request, $id)
+    // {
+    //     $user = User::find($id);
+    //     $data = $request->except(['image']);
+
+    //     if ($request->image) {
+    //         if ($user->image != 'default.png') {
+    //             Storage::disk('public_uploads')->delete('/user/' . $user->image);
+    //         }
+    //         $img = Image::make($request->image)->resize(300, null, function ($constraint) {
+    //             $constraint->aspectRatio();
+    //         })->save(public_path('uploads/user/' . $request->image->hashName()));
+
+    //         $data['image'] = $request->image->hashName();
+    //         $user->update($data);
+    //     } else {
+    //         Auth()->user()->image_path;
+    //     }
+    //     return redirect()->back();
+    // }
 
     public function destroy($id)
     {
