@@ -67,10 +67,10 @@
                                         <form method="post" action="{{route('presence.save')}}" id="abrence">
                                             @method('POST')
                                             <input type="hidden" name="_token" id="token2" value="{{csrf_token()}}">
-                                            <input type="hidden" name="type" value="absence">
+                                            <input type="hidden" name="type" value="leave">
                                             <input type="hidden" name="id" value="{{auth()->user()->id}}">
-                                            <button type="submit" class="btn btn-danger btn-sm absence {{is_null($page)?'disabled':''}}"
-                                                    data-type="absence"
+                                            <button type="submit" class="btn btn-danger btn-sm leave {{is_null($page)?'disabled':''}}"
+                                                    data-type="leave"
                                                     data-id="{{auth()->user()->id}}"
                                             >انصراف
                                             </button>
