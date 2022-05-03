@@ -11,6 +11,11 @@ use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function profile()
     {
         return view('dashboard.user_page.page');
@@ -19,7 +24,7 @@ class ProfileController extends Controller
     public function updateprofile(Request $request, $id)
     {
         // dd($request->all());
-        
+
         $this->validate($request, [
             'name' => 'required|min:3|max:50',
             'email' => 'email',

@@ -12,12 +12,14 @@ class PageUserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->only('index');
+        $this->middleware('auth')->only('calender');
     }
 
     public function index()
     {
-        $page = PageUser::where(['type' => 'presence', 'day' => \Illuminate\Support\Carbon::today()->format('l'), 'user_id' => auth()->user()->id])->where('history','  =',Carbon::now()->format('Y-m-d'))->latest()->first();
+        $page = PageUser::where(['type' => 'presence', 'day' => \Illuminate\Support\Carbon::today()->format('l'), 'user_id' => auth()->user()->id])->where('history','=',Carbon::now()->format('Y-m-d'))->latest()->first();
+
         return view('/dashboard.user_page.index', compact('page'));
     }
 

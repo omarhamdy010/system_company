@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::group(['middleware' => ['auth','admin']], function () {
+    Route::resource('/admin', '\App\Http\Controllers\Dashboard\AdminPageController');
+});
 Route::middleware(['auth'])->group(function () {
-    Route::group(['middleware' => ['admin']], function () {
-        Route::resource('/admin', '\App\Http\Controllers\Dashboard\AdminPageController');
-    });
 
     Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
