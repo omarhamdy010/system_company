@@ -16,10 +16,8 @@
                     {{--                        </ol>--}}
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
-    <!-- Main content -->
-    <?php $days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']; ?>
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -47,17 +45,17 @@
                                     <th>email</th>
                                     <th>phone</th>
                                     <th>day</th>
-                                    <th>attendce</th>
+                                    <th>history</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($days as $day)
+                                @foreach($userdata as $data)
                                     <tr>
                                         <td>{{$users->name}}</td>
                                         <td>{{$users->email}}</td>
                                         <td>{{$users->phone}}</td>
-                                        <td>{{$day}}</td>
-{{--                                        <td>{{$attendanceday == $day ?'attendance':''}}</td>--}}
+                                        <td>{{$data->day}}</td>
+                                        <td>{{$data->history}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

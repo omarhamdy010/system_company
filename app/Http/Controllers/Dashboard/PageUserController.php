@@ -10,11 +10,7 @@ use Illuminate\Support\Carbon;
 
 class PageUserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')->only('index');
-        $this->middleware('auth')->only('calender');
-    }
+
 
     public function index()
     {

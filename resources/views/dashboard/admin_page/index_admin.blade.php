@@ -50,6 +50,7 @@
                                 <th>phone</th>
                                 <th>status</th>
                                 <th>image</th>
+                                <th>attendance</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -63,6 +64,7 @@
                                             <input data-id="{{$user->id}}" class="toggle-class this_toggle"  type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $user->status ? 'checked' : '' }}>
                                         </td>
                                         <td><img src="{{$user->image_path}}" width="75px" height="75px"></td>
+                                        <td><a class="btn btn-primary btn-sm" href="{{route('getAttendance',['id'=>$user->id])}}">Attendance</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
