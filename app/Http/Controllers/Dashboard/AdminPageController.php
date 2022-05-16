@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\PageUser;
+use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -25,7 +25,7 @@ class AdminPageController extends Controller
     {
         $users = User::where('id',$id)->first();
         $attendanceday=[];
-        $userdata= PageUser::where(['user_id'=>$id, 'type'=>'presence'])->get();
+        $userdata= Attendance::where(['user_id'=>$id, 'type'=>'presence'])->get();
 
         return view('dashboard.admin_page.attendance',compact('users','userdata','attendanceday'));
     }

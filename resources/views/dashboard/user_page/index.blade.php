@@ -56,7 +56,7 @@
                                             <input type="hidden" name="_token" id="token1" value="{{csrf_token()}}">
                                             <input type="hidden" name="type" value="presence">
                                             <input type="hidden" name="id" value="{{auth()->user()->id}}">
-                                            <button type="submit" class="btn btn-success btn-sm presence {{is_null($page)?'':'disabled'}}"
+                                            <button type="submit" class="btn btn-success btn-sm presence {{$attendance==false?'':'disabled'}}"
                                                     data-type="presence"
                                                     data-id="{{auth()->user()->id}}"
                                             >حضور
@@ -64,12 +64,12 @@
                                         </form>
                                     </div>
                                     <div style="float: right; width: 334px">
-                                        <form method="post" action="{{route('presence.save')}}" id="abrence">
+                                        <form method="post" action="{{route('presence.store')}}" id="abrence">
                                             @method('POST')
                                             <input type="hidden" name="_token" id="token2" value="{{csrf_token()}}">
                                             <input type="hidden" name="type" value="leave">
                                             <input type="hidden" name="id" value="{{auth()->user()->id}}">
-                                            <button type="submit" class="btn btn-danger btn-sm leave {{is_null($page)?'disabled':''}}"
+                                            <button type="submit" class="btn btn-danger btn-sm leave {{$attendance==false ? 'disabled':''}}"
                                                     data-type="leave"
                                                     data-id="{{auth()->user()->id}}"
                                             >انصراف
