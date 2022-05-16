@@ -15,6 +15,7 @@ class CreatePageUsersTable extends Migration
             $table->string('type');
             $table->string('day');
             $table->text('time');
+            $table->text('history');
 
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

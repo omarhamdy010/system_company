@@ -10,27 +10,36 @@ use Illuminate\Support\Carbon;
 
 class PageUserController extends Controller
 {
-    public function index()
-    {        $page = PageUser::where(['type' => 'presence', 'day' => \Illuminate\Support\Carbon::today()->format('l'), 'user_id' => auth()->user()->id])->latest()->first();
 
-        return view('/dashboard.user_page.index',compact('page'));
+
+    public function index()
+    {
+        $page = PageUser::where(['type' => 'presence', 'day' => \Illuminate\Support\Carbon::today()->
+        format('l'), 'user_id' => auth()->user()->id])->
+        where('history', '=', Carbon::now()->format('Y-m-d'))->latest()->first();
+
+        return view('/dashboard.user_page.index', compact('page'));
     }
 
     public function store(User $user, Request $request)
     {
-        $page = PageUser::where(['type' => 'presence', 'day' => \Illuminate\Support\Carbon::today()->format('l'), 'user_id' => auth()->user()->id])->latest()->first();
+        $page = PageUser::where(['type' => 'presence', 'day' => \Illuminate\Support\Carbon::today()->
+        format('l'), 'user_id' => auth()->user()->id])->
+        where('history', '=', Carbon::now()->format('Y-m-d'))->latest()->first();
         if (is_null($page)) {
             $pageuser = [
                 'user_id' => auth()->user()->id,
                 'type' => 'presence',
                 'time' => '-',
                 'day' => '-',
+                'history' => '-'
             ];
 
             $pag = PageUser::create($pageuser);
             $pageuser = [
                 'time' => $pag->created_at,
                 'day' => \Illuminate\Support\Carbon::today()->format('l'),
+                'history' => Carbon::now()->format('Y-m-d'),
             ];
 
 
@@ -47,20 +56,23 @@ class PageUserController extends Controller
 
     public function save(Request $request)
     {
-        $page = PageUser::where(['type' => 'absence', 'day' => \Illuminate\Support\Carbon::today()->format('l'), 'user_id' => auth()->user()->id])->latest()->first();
+        $page = PageUser::where(['type' => 'leave', 'day' => \Illuminate\Support\Carbon::today()->
+        format('l'), 'user_id' => auth()->user()->id])->
+        where('history', '=', Carbon::now()->format('Y-m-d'))->latest()->first();
         if (is_null($page)) {
             $pageuser = [
                 'user_id' => auth()->user()->id,
-                'type' => 'absence',
+                'type' => 'leave',
                 'time' => '-',
                 'day' => '-',
+                'history' => '-'
             ];
             $pag = PageUser::create($pageuser);
             $pageuser = [
                 'time' => $pag->updated_at,
                 'day' => \Illuminate\Support\Carbon::today()->format('l'),
+                'history' => Carbon::now()->format('Y-m-d'),
             ];
-
 
             $pag->update($pageuser);
 
@@ -74,8 +86,8 @@ class PageUserController extends Controller
             $pageuser = [
                 'time' => $page->updated_at,
                 'day' => \Illuminate\Support\Carbon::today()->format('l'),
+                'history' => Carbon::now()->format('Y-m-d'),
             ];
-
 
             $page->update($pageuser);
 
@@ -89,7 +101,7 @@ class PageUserController extends Controller
 
     public function calender()
     {
-        $presence_users = PageUser::where('user_id', auth()->user()->id)->get();
+        $presence_users = PageUser::where('user_id', auth()->user()->id)->orderBy('history', 'asc')->get();
 
         return view('dashboard.user_page.calender', compact('presence_users'));
     }

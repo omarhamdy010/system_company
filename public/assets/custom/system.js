@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    // $('.absence').hide();
+    // $('.leave').hide();
     $('#prence').submit( function (e) {
         e.preventDefault();
 
         $('.presence').addClass('disabled');
-        $('.absence').removeClass('disabled');
+        $('.leave').removeClass('disabled');
 
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var d = new Date();
@@ -75,7 +75,7 @@ $(document).ready(function () {
 
         var html = `
               <tr class="table-info">
-                  <td class="text-bold-500">absence</td>
+                  <td class="text-bold-500">leave</td>
                   <td>${today}</td>
                   <td>${dayName}</td>
               </tr>
