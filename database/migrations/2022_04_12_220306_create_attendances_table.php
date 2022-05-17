@@ -13,10 +13,8 @@ class CreateAttendancesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('type');
-            $table->string('time');
-            $table->string('history');
-//            $table->dateTime('time');
-//            $table->date('history');
+            $table->dateTime('time');
+            $table->date('history');
 
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

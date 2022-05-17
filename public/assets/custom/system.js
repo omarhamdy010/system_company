@@ -93,7 +93,7 @@ $(document).ready(function () {
                     this.reset();
                     console.log('Image has been uploaded successfully');
                 }
-                $('.user_table').append(html);
+                // $('.user_table').append(html);
             },
             error: function (response) {
                 console.log(response);
