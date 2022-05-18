@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -49,7 +51,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function pageuser(){
-        return $this->hasMany(PageUser::class);
+    public function attendance(){
+        return $this->hasMany(Attendance::class);
+    }
+    public function getIsAttendanceAttribute()
+    {
+        return (boolean)$this->attendance()->where(['type' => 'presence',
+            'history'=> Carbon::now()->format('Y-m-d')
+        ])->first();
+    }
+    public function getIsLeaveAttribute()
+    {
+        return (boolean)$this->attendance()->where(['type' => 'leave',
+            'history'=> Carbon::now()->format('Y-m-d')
+        ])->first();
     }
 }

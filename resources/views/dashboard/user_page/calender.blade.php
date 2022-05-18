@@ -51,7 +51,6 @@
                                                         <th>النوع</th>
                                                         <th>وقت</th>
                                                         <th>التاريخ</th>
-                                                        <th>اليوم</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody class="user_table">
@@ -60,7 +59,6 @@
                                                             <td>{{$presence_user->type}}</td>
                                                             <td>{{$presence_user->time}}</td>
                                                             <td>{{$presence_user->history}}</td>
-                                                            <td>{{$presence_user->day}}</td>
                                                         </tr>
                                                     @endforeach
                                                     </tbody>

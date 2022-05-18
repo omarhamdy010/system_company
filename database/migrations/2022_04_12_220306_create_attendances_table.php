@@ -4,18 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePageUsersTable extends Migration
+class CreateAttendancesTable extends Migration
 {
 
     public function up()
     {
-        Schema::create('page_users', function (Blueprint $table) {
+        Schema::create('attendances', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('type');
-            $table->string('day');
-            $table->text('time');
-            $table->text('history');
+            $table->dateTime('time');
+            $table->date('history');
 
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -25,6 +24,6 @@ class CreatePageUsersTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('page_users');
+        Schema::dropIfExists('attendances');
     }
 }
