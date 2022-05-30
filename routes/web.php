@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('changeStatus', '\App\Http\Controllers\Dashboard\AdminPageController@changeStatus');
         Route::get('getAttendance/{id}', '\App\Http\Controllers\Dashboard\AdminPageController@getAttendance')->name('getAttendance');
+        Route::get('getcalender', '\App\Http\Controllers\Dashboard\AdminPageController@getCalender')->name('getcalender');
 
         Route::post('/store', '\App\Http\Controllers\Dashboard\AttendanceController@store')->name('presence.store');
         Route::get('/calender', '\App\Http\Controllers\Dashboard\AttendanceController@calender')->name('calender');
