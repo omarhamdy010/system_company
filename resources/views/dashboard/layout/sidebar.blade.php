@@ -48,15 +48,15 @@
                         <li class="nav-item">
                             <a href="{{route('calender')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
+                                <p>attendance</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('getcalender')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
                                 <p>Calender</p>
                             </a>
                         </li>
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="../../index3.html" class="nav-link">--}}
-{{--                                <i class="far fa-circle nav-icon"></i>--}}
-{{--                                <p>Dashboard v3</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
                     </ul>
                 </li>
                 <li class="nav-item">

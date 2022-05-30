@@ -7,6 +7,7 @@ use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Nette\Utils\DateTime;
 
 class AdminPageController extends Controller
 {
@@ -41,16 +42,16 @@ class AdminPageController extends Controller
 
     public static function months($futureM)
     {
-//        $now = Carbon::now();
-//        $start = (new DateTime($now->format('Y-m-d')))->modify('first day of this month');
-//        $end = (new DateTime(($now->addMonths($futureM))->format('Y-m-d')))->modify('first day of next month');
-//        $interval = \DateInterval::createFromDateString('1 month');
-//        $period = new \DatePeriod($start, $interval, $end);
-//        $months = array();
-//        foreach ($period as $dt) {
-//            array_push($months, array('month' => $dt->format("F/Y"), 'days' ));
-//        }
-//        return $months;
+        $now = Carbon::now();
+        $start = (new DateTime($now->format('Y-m-d')))->modify('first day of this month');
+        $end = (new DateTime(($now->addMonths($futureM))->format('Y-m-d')))->modify('first day of next month');
+        $interval = \DateInterval::createFromDateString('1 month');
+        $period = new \DatePeriod($start, $interval, $end);
+        $months = array();
+        foreach ($period as $dt) {
+            array_push($months, array('month' => $dt->format("F/Y"), 'days' ));
+        }
+        return $months;
     }
 
     public function getCalender()
@@ -66,8 +67,10 @@ class AdminPageController extends Controller
             $monthStartDate = $monthStartDate->addDay();
         }
         $attends = Attendance::where(['user_id'=>auth()->id(),'type'=>'presence'])->get();
-
-        return view('dashboard.admin_page.calender', compact('month_name', 'pickup_dates','attends'));
+        foreach($attends as $attend ){
+        $history[] = $attend->history;
+    }
+        return view('dashboard.admin_page.calender', compact('history','month_name', 'pickup_dates','attends'));
     }
 
 }

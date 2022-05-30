@@ -18,19 +18,18 @@
         </div>
     </section>
 
-    @foreach($attends as $attend )
-        {{$history[] = $attend->history}}
-    @endforeach
+
+
+
     <section class="content">
         <div class="container-fluid">
-            <p class="card-text" style="text-align: center;border: #0c84ff 1px; background: #1fc8e3;color: white">{{$month_name}}</p>
-            <a href="#" class="month">attend</a>
+            <p class="card-text"
+               style="text-align: center;border: #0c84ff 1px; background: #1fc8e3;color: white">{{$month_name}}</p>
             <div class="row">
                 @foreach($pickup_dates as $day )
-
-                    <div class="col-sm-3" >
-                        <div class="card {{in_array($day,$history) ? 'attend': 'not_attend'}}">
-                            <div class="card-body">
+                    <div class="col-sm-3">
+                        <div class="card {{in_array($day,$history) ? 'attend': ''}}" id="card111" style="background: red">
+                            <div class="card-body ">
                                 <h5 class="card-title">{{$day}}</h5>
                                 <p class="card-text">{{\Carbon\Carbon::parse($day)->format("l")}}</p>
                             </div>
@@ -40,17 +39,13 @@
             </div>
         </div>
     </section>
+
+    <script>
+        if ($('.card').hasClass('attend')) {
+            $('.attend').css("background", "green");
+        }
+
+    </script>
+
 @endsection
 
-<script>
-    $(document).ready(function () {
-        $('.month').on('click',function () {
-            if($('.card').hasClass('attend')){
-                $(this).css("background-color", "green");
-            }else {
-                $(this).css("background-color","red");
-            }
-        });
-    })
-
-</script>
