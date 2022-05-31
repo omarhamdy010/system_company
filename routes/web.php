@@ -32,8 +32,6 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/store', '\App\Http\Controllers\Dashboard\AttendanceController@store')->name('presence.store');
         Route::get('/calender', '\App\Http\Controllers\Dashboard\AttendanceController@calender')->name('calender');
-        Route::get('/events', '\App\Http\Controllers\EventController@index')->name('events');
-        Route::post('fullcalenderAjax', '\App\Http\Controllers\EventController@ajax');
 
         Route::get('/profile/{id}/edit', '\App\Http\Controllers\Dashboard\ProfileController@profile')->name('presence.profile');
         Route::put('/updateprofile/{id}', '\App\Http\Controllers\Dashboard\ProfileController@updateprofile')->name('updateprofile');
