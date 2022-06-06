@@ -49,28 +49,49 @@ class AdminPageController extends Controller
         $period = new \DatePeriod($start, $interval, $end);
         $months = array();
         foreach ($period as $dt) {
-            array_push($months, array('month' => $dt->format("F/Y"), 'days' ));
+            array_push($months, array('month' => $dt->format("F/Y"), 'days'));
         }
         return $months;
     }
 
+    public function getcal(Request $request)
+    {
+        dd($request->all());
+    }
+
     public function getCalender()
     {
-        $current_month = Carbon::now();
-        $month_name = $current_month->format('F');
-        $month = $current_month->month;
-        $days = Carbon::now()->month($month)->daysInMonth;
-        $monthStartDate = Carbon::now()->startOfMonth();
+//        $date = Carbon::now();
+       $day= \request()->query('day');
+       $month= \request()->query('month');
+       $year= \request()->query('year');
+       $sday = Carbon::createFromFormat('d',Carbon::parse($day)->format('d') );
+       $smonth = Carbon::createFromFormat('m',Carbon::parse($month)->format('m') );
+       $syear = Carbon::createFromFormat('Y',Carbon::parse($day)->format('Y') );
+
+        $date_time = Carbon::create($syear,$sday,$smonth);
+//        dd($date_time);
+        $date = Carbon::createFromFormat('m/d/Y', $date_time)->addMonthsNoOverflow();
+//        $newDate = $date->format('m/d/Y');
+
+//        dd($newDate);
+
+        $lastMonth = $date->subMonth(); // August
+        $month_name = $lastMonth->format('F');
+        $month = $lastMonth->month;
+        $days = $date->month($month)->daysInMonth;
+        $monthStartDate = $date->startOfMonth();
         $pickup_dates = [];
         for ($i = 1; $i <= $days; $i++) {
             $pickup_dates[] = $monthStartDate->toDateString();
             $monthStartDate = $monthStartDate->addDay();
         }
-        $attends = Attendance::where(['user_id'=>auth()->id(),'type'=>'presence'])->get();
-        foreach($attends as $attend ){
-        $history[] = $attend->history;
-    }
-        return view('dashboard.admin_page.calender', compact('history','month_name', 'pickup_dates','attends'));
+        $attends = Attendance::where(['user_id' => auth()->id(), 'type' => 'presence'])->get();
+        foreach ($attends as $attend) {
+            $history[] = $attend->history;
+        }
+
+        return view('dashboard.admin_page.calender', compact('history', 'month_name', 'pickup_dates', 'attends'));
     }
 
 }

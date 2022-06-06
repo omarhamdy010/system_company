@@ -27,12 +27,16 @@
             <p class="card-text"
                style="text-align: center;border: #0c84ff 1px; background: #1fc8e3;color: white">{{$month_name}}</p>
             <div class="row">
+                <input type="hidden" class="year" value="{{\Carbon\Carbon::now()->format('Y')}}">
+                <input type="hidden" class="month" value="{{\Carbon\Carbon::now()->format('m')}}">
+                <input type="hidden" class="day" value="{{\Carbon\Carbon::now()->format('d')}}">
+
                 @foreach($pickup_dates as $day )
                     <div class="col-sm-3">
                         <div class="card {{in_array($day,$history) ? 'attend': 'absent'}}" id="card111"
                              style="color: red">
                             <div class="card-body ">
-                                <h5 class="card-title">{{$day}}</h5>
+                                <h5 class="card-title" >{{$day}}</h5>
                                 <p class="card-text">{{\Carbon\Carbon::parse($day)->format("l")}}</p>
                             </div>
                         </div>
@@ -46,10 +50,23 @@
         if ($('.card').hasClass('attend')) {
             $('.attend').css("color", "green");
         }
-
-        $('.before').on('click',function () {
-
-        })
+        $(document).ready(function () {
+            var day = $('.day').val();
+            var month = $('.month').val()-1;
+            var year = $('.year').val();
+            $('.before').on('click',function (e) {
+                e.preventDefault();
+                // alert(day + '-'+ month + '-'+year);
+                $.ajax({
+                    type: "GET",
+                    url: '/getcal',
+                    data: {'day': day, 'month': month,'year':year},
+                    success: function(data){
+                        console.log(data.success)
+                    }
+                });
+            });
+        });
 
     </script>
 
