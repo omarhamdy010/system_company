@@ -58,7 +58,9 @@ class AdminPageController extends Controller
     {
 //        dd($request->all());
         $current_month = $request->date ? Carbon::parse($request->date):Carbon::now();
-//        dd($current_month);
+        $dayOfTheWeek = $current_month->dayOfWeek;
+
+//        dd($dayOfTheWeek);
         $month_name = $current_month->format('F');
         $month = $current_month->month;
         $days = $current_month->month($month)->daysInMonth;
