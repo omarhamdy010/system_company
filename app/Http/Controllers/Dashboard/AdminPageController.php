@@ -54,13 +54,15 @@ class AdminPageController extends Controller
         return $months;
     }
 
-    public function getCalender()
+    public function getCalender(Request $request)
     {
-        $current_month = Carbon::now();
+//        dd($request->all());
+        $current_month = $request->date ? Carbon::parse($request->date):Carbon::now();
+//        dd($current_month);
         $month_name = $current_month->format('F');
         $month = $current_month->month;
-        $days = Carbon::now()->month($month)->daysInMonth;
-        $monthStartDate = Carbon::now()->startOfMonth();
+        $days = $current_month->month($month)->daysInMonth;
+        $monthStartDate = $current_month->startOfMonth();
         $pickup_dates = [];
         for ($i = 1; $i <= $days; $i++) {
             $pickup_dates[] = $monthStartDate->toDateString();
@@ -70,7 +72,7 @@ class AdminPageController extends Controller
         foreach($attends as $attend ){
         $history[] = $attend->history;
     }
-        return view('dashboard.admin_page.calender', compact('history','month_name', 'pickup_dates','attends'));
+        return view('dashboard.admin_page.calender', compact('history','month_name', 'pickup_dates','attends','current_month'));
     }
 
 }
