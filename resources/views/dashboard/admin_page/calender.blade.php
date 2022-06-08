@@ -20,16 +20,16 @@
     <section class="content">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-center mb-4">
-                <i class="fas px-2 fa-arrow-alt-circle-left fa-5x before"></i>
-                <i class="fas px-2 fa-arrow-alt-circle-right fa-5x after"></i>
+                <a class="fas px-2 fa-arrow-alt-circle-left fa-5x" data-data="{{Carbon\Carbon::now()->addMonth()}}"></a>
+                <a class="fas px-2 fa-arrow-alt-circle-right fa-5x" data-data="{{Carbon\Carbon::now()->subMonth()}}"></a>
             </div>
 
             <p class="card-text"
                style="text-align: center;border: #0c84ff 1px; background: #1fc8e3;color: white">{{$month_name}}</p>
             <div class="row">
-                <input type="hidden" class="year" value="{{\Carbon\Carbon::now()->format('Y')}}">
-                <input type="hidden" class="month" value="{{\Carbon\Carbon::now()->format('m')}}">
-                <input type="hidden" class="day" value="{{\Carbon\Carbon::now()->format('d')}}">
+{{--                <input type="hidden" class="year" value="{{\Carbon\Carbon::now()->format('Y')}}">--}}
+{{--                <input type="hidden" class="month" value="{{\Carbon\Carbon::now()->format('m')}}">--}}
+{{--                <input type="hidden" class="day" value="{{\Carbon\Carbon::now()->format('d')}}">--}}
 
                 @foreach($pickup_dates as $day )
                     <div class="col-sm-3">
@@ -45,30 +45,5 @@
             </div>
         </div>
     </section>
-
-    <script>
-        if ($('.card').hasClass('attend')) {
-            $('.attend').css("color", "green");
-        }
-        $(document).ready(function () {
-            var day = $('.day').val();
-            var month = $('.month').val()-1;
-            var year = $('.year').val();
-            $('.before').on('click',function (e) {
-                e.preventDefault();
-                // alert(day + '-'+ month + '-'+year);
-                $.ajax({
-                    type: "GET",
-                    url: '/getcal',
-                    data: {'day': day, 'month': month,'year':year},
-                    success: function(data){
-                        console.log(data.success)
-                    }
-                });
-            });
-        });
-
-    </script>
-
 @endsection
 
