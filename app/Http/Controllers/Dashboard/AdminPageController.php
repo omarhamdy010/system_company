@@ -40,42 +40,35 @@ class AdminPageController extends Controller
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public static function months($futureM)
-    {
-        $now = Carbon::now();
-        $start = (new DateTime($now->format('Y-m-d')))->modify('first day of this month');
-        $end = (new DateTime(($now->addMonths($futureM))->format('Y-m-d')))->modify('first day of next month');
-        $interval = \DateInterval::createFromDateString('1 month');
-        $period = new \DatePeriod($start, $interval, $end);
-        $months = array();
-        foreach ($period as $dt) {
-            array_push($months, array('month' => $dt->format("F/Y"), 'days' ));
-        }
-        return $months;
-    }
-
     public function getCalender(Request $request)
     {
-//        dd($request->all());
         $current_month = $request->date ? Carbon::parse($request->date):Carbon::now();
         $dayOfTheWeek = $current_month->dayOfWeek;
 
-//        dd($dayOfTheWeek);
         $month_name = $current_month->format('F');
         $month = $current_month->month;
         $days = $current_month->month($month)->daysInMonth;
         $monthStartDate = $current_month->startOfMonth();
-//        $monthStartDate->format('l')//name of the first day of month
+
+//        $monthStartDate->format('l');//name of the first day of month
+
+        $daynames = ['Saturday','Sunday','Monday', 'Tuesday','Wednesday','Thursday','Friday'];
+        foreach ($daynames as $key=>$day){
+            if($monthStartDate->format('l')==$day){
+                break;}
+            array_push($daynames , $day);
+            unset($daynames[$key]);}
+        $daysfirstweek=array_values($daynames);
+
         $pickup_dates = [];
         for ($i = 1; $i <= $days; $i++) {
             $pickup_dates[] = $monthStartDate->toDateString();
             $monthStartDate = $monthStartDate->addDay();
         }
         $attends = Attendance::where(['user_id'=>auth()->id(),'type'=>'presence'])->get();
-        foreach($attends as $attend ){
-        $history[] = $attend->history;
-    }
-        return view('dashboard.admin_page.calender', compact('history','month_name', 'pickup_dates','attends','current_month'));
+
+
+        return view('dashboard.admin_page.calender', compact('month_name', 'pickup_dates','attends','current_month','daynames','daysfirstweek'));
     }
 
 }
