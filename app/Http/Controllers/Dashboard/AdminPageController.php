@@ -7,7 +7,6 @@ use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Nette\Utils\DateTime;
 
 class AdminPageController extends Controller
 {
@@ -42,33 +41,53 @@ class AdminPageController extends Controller
 
     public function getCalender(Request $request)
     {
-        $current_month = $request->date ? Carbon::parse($request->date):Carbon::now();
+        $current_month = $request->date ? Carbon::parse($request->date) : Carbon::now();
         $dayOfTheWeek = $current_month->dayOfWeek;
 
         $month_name = $current_month->format('F');
         $month = $current_month->month;
         $days = $current_month->month($month)->daysInMonth;
         $monthStartDate = $current_month->startOfMonth();
+        $day_week_start = [];
+        $weekend=['Friday','Saturday'];
+        $daynames = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        foreach ($daynames as $key => $day) {
+            if ($monthStartDate->format('l') == $day) {
+                break;
+            }
+            $day_week_start[] = $daynames[$key];
+            unset($daynames[$key]);
+        }
+        $daysfirstweek = array_values($daynames);
 
-//        $monthStartDate->format('l');//name of the first day of month
 
-        $daynames = ['Saturday','Sunday','Monday', 'Tuesday','Wednesday','Thursday','Friday'];
-        foreach ($daynames as $key=>$day){
-            if($monthStartDate->format('l')==$day){
-                break;}
-            array_push($daynames , $day);
-            unset($daynames[$key]);}
-        $daysfirstweek=array_values($daynames);
+        $attends = Attendance::where(['user_id' => auth()->id(), 'type' => 'presence'])->get();
+        $daynumberofattend = 0;
+        $absence = 0;
+        foreach ($attends as $attend) {
+            $history[] = $attend->history;
+        }
+
 
         $pickup_dates = [];
+
         for ($i = 1; $i <= $days; $i++) {
             $pickup_dates[] = $monthStartDate->toDateString();
+            if (in_array($pickup_dates[$i-1],$history))
+            {
+                in_array(Carbon::parse($pickup_dates[$i-1])->format('l'),$weekend)?'': $daynumberofattend = $daynumberofattend+1;
+//                dump(Carbon::parse($pickup_dates[$i-1])->format('l'));
+            }else{
+                in_array(Carbon::parse($pickup_dates[$i-1])->format('l'),$weekend)?'':  $absence = $absence+1;
+            }
+
+            $daysmustattend= $absence +$daynumberofattend;
+
+            $avarge_work_in_month=8*$daysmustattend;
             $monthStartDate = $monthStartDate->addDay();
+
         }
-        $attends = Attendance::where(['user_id'=>auth()->id(),'type'=>'presence'])->get();
-
-
-        return view('dashboard.admin_page.calender', compact('month_name', 'pickup_dates','attends','current_month','daynames','daysfirstweek'));
+        return view('dashboard.admin_page.calender', compact('avarge_work_in_month','month_name', 'pickup_dates', 'attends', 'current_month', 'daynames', 'daysfirstweek', 'history', 'day_week_start', 'daynumberofattend', 'absence','daysmustattend'));
     }
 
 }
