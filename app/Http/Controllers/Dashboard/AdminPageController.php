@@ -45,9 +45,9 @@ class AdminPageController extends Controller
         $dayOfTheWeek = $current_month->dayOfWeek;
 
         $month_name = $current_month->format('F');
-        $month = $current_month->month;
-        $days = $current_month->month($month)->daysInMonth;
+        $days = $current_month->daysInMonth;
         $monthStartDate = $current_month->startOfMonth();
+        $monthEndDate = $current_month->endOfMonth();
         $day_week_start = [];
         $weekend=['Friday','Saturday'];
         $daynames = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -59,7 +59,6 @@ class AdminPageController extends Controller
             unset($daynames[$key]);
         }
         $daysfirstweek = array_values($daynames);
-
 
         $attends = Attendance::where(['user_id' => auth()->id(), 'type' => 'presence'])->get();
         $daynumberofattend = 0;
@@ -76,7 +75,6 @@ class AdminPageController extends Controller
             if (in_array($pickup_dates[$i-1],$history))
             {
                 in_array(Carbon::parse($pickup_dates[$i-1])->format('l'),$weekend)?'': $daynumberofattend = $daynumberofattend+1;
-//                dump(Carbon::parse($pickup_dates[$i-1])->format('l'));
             }else{
                 in_array(Carbon::parse($pickup_dates[$i-1])->format('l'),$weekend)?'':  $absence = $absence+1;
             }

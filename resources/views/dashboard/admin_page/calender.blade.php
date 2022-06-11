@@ -84,7 +84,7 @@
                                         @if($att2 != null)
                                         <p class="card-text">{{ in_array($day,$history)?'leave ='.\Illuminate\Support\Carbon::parse($att2->time)->format('H:i:m'):''}}</p>
                                             <?php $time_diff = \Illuminate\Support\Carbon::parse($att1->time)->diff((\Illuminate\Support\Carbon::parse($att2->time)))->format('%h') ;?>
-                                            @dump($time_diff)
+{{--                                            @dump($time_diff)--}}
 
                                         @endif
                                         @break
