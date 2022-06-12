@@ -61,14 +61,14 @@ class AdminPageController extends Controller
         $daysfirstweek = array_values($daynames);
 
 
-        $attends = Attendance::where(['user_id' => auth()->id(), 'type' => 'presence'])->get();
+        $attends = Attendance::where(['user_id' => auth()->id()])->get();
         $daynumberofattend = 0;
         $absence = 0;
         foreach ($attends as $attend) {
             $history[] = $attend->history;
         }
-
-
+        $time_diff_hours=0;
+        $time_diff_minutes =0;
         $pickup_dates = [];
 
         for ($i = 1; $i <= $days; $i++) {
@@ -76,7 +76,6 @@ class AdminPageController extends Controller
             if (in_array($pickup_dates[$i-1],$history))
             {
                 in_array(Carbon::parse($pickup_dates[$i-1])->format('l'),$weekend)?'': $daynumberofattend = $daynumberofattend+1;
-//                dump(Carbon::parse($pickup_dates[$i-1])->format('l'));
             }else{
                 in_array(Carbon::parse($pickup_dates[$i-1])->format('l'),$weekend)?'':  $absence = $absence+1;
             }
@@ -84,10 +83,22 @@ class AdminPageController extends Controller
             $daysmustattend= $absence +$daynumberofattend;
 
             $avarge_work_in_month=8*$daysmustattend;
+
+            foreach ($attends as $attend){
+                if ($attend->history == $pickup_dates[$i-1]) {
+                    $att1 = $attend->where(['history' => $pickup_dates[$i-1] , 'type' => 'presence'])->first();
+                    $att2 = $attend->where(['history' => $pickup_dates[$i-1] , 'type' => 'leave'])->first();
+                    if ($att1->time != null || $att2->time != null) {
+                        $time_diff_hours += \Illuminate\Support\Carbon::parse($att1->time)->diff((\Illuminate\Support\Carbon::parse($att2->time)))->format('%h');
+                        $time_diff_minutes += \Illuminate\Support\Carbon::parse($att1->time)->diff((\Illuminate\Support\Carbon::parse($att2->time)))->format('%i');
+                    }
+                    break;
+                }
+            }
             $monthStartDate = $monthStartDate->addDay();
 
         }
-        return view('dashboard.admin_page.calender', compact('avarge_work_in_month','month_name', 'pickup_dates', 'attends', 'current_month', 'daynames', 'daysfirstweek', 'history', 'day_week_start', 'daynumberofattend', 'absence','daysmustattend'));
+        return view('dashboard.admin_page.calender', compact('avarge_work_in_month','month_name', 'pickup_dates', 'attends', 'current_month', 'daynames', 'daysfirstweek', 'history', 'day_week_start', 'daynumberofattend', 'absence','daysmustattend','time_diff_minutes','time_diff_hours'));
     }
 
 }
