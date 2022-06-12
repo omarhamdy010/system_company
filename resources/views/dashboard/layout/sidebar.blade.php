@@ -52,7 +52,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('getcalender')}}" class="nav-link">
+                            <a href="{{route('getcalender',['id'=>auth()->id()])}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Calender</p>
                             </a>
