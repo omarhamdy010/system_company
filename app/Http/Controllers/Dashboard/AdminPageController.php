@@ -35,13 +35,14 @@ class AdminPageController extends Controller
         $user = User::find($request->user_id);
         $user->status = $request->status;
         $user->save();
+
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function getCalender(Request $request,$id)
+    public function getCalender(Request $request, $id)
     {
-        $users = User::where(['is_admin' => 0, 'status' => 1])->get();
         $current_month = $request->date ? Carbon::parse($request->date) : Carbon::now();
+        $users = User::where(['is_admin' => 0, 'status' => 1])->get();
         $month_name = $current_month->format('F');
         $month = $current_month->month;
         $days = $current_month->month($month)->daysInMonth;
@@ -57,7 +58,8 @@ class AdminPageController extends Controller
             unset($daynames[$key]);
         }
         $daysfirstweek = array_values($daynames);
-        $attends = Attendance::where(['user_id' =>$id])->get();
+
+        $attends = Attendance::where(['user_id' => auth()->id()])->get();
         $daynumberofattend = 0;
         $absence = 0;
         $history = [];
@@ -87,9 +89,30 @@ class AdminPageController extends Controller
                     break;
                 }
             }
+            if (in_array($pickup_dates[$i - 1], $history)) {
+                in_array(Carbon::parse($pickup_dates[$i - 1])->format('l'), $weekend) ? '' : $daynumberofattend = $daynumberofattend + 1;
+            } else {
+                in_array(Carbon::parse($pickup_dates[$i - 1])->format('l'), $weekend) ? '' : $absence = $absence + 1;
+            }
+
+            $daysmustattend = $absence + $daynumberofattend;
+
+            $avarge_work_in_month = 8 * $daysmustattend;
+
+            foreach ($attends as $attend) {
+                if ($attend->history == $pickup_dates[$i - 1]) {
+                    $att1 = $attend->where(['history' => $pickup_dates[$i - 1], 'type' => 'presence'])->first();
+                    $att2 = $attend->where(['history' => $pickup_dates[$i - 1], 'type' => 'leave'])->first();
+                    if ($att1->time != null || $att2->time != null) {
+                        $time_diff_hours += \Illuminate\Support\Carbon::parse($att1->time)->diff((\Illuminate\Support\Carbon::parse($att2->time)))->format('%h');
+                        $time_diff_minutes += \Illuminate\Support\Carbon::parse($att1->time)->diff((\Illuminate\Support\Carbon::parse($att2->time)))->format('%i');
+                    }
+                    break;
+                }
+            }
             $monthStartDate = $monthStartDate->addDay();
         }
-        return view('dashboard.admin_page.calender', compact('avarge_work_in_month', 'month_name', 'pickup_dates', 'attends', 'users', 'current_month', 'daynames', 'daysfirstweek', 'history', 'day_week_start', 'daynumberofattend', 'absence', 'daysmustattend', 'time_diff_hours', 'time_diff_minutes','id'));
+        return view('dashboard.admin_page.calender', compact('avarge_work_in_month', 'month_name', 'pickup_dates', 'attends', 'users', 'current_month', 'daynames', 'daysfirstweek', 'history', 'day_week_start', 'daynumberofattend', 'absence', 'daysmustattend', 'time_diff_hours', 'time_diff_minutes', 'id'));
     }
 
 }

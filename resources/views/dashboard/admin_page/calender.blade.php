@@ -13,17 +13,17 @@
     </section>
     <section class="content">
         @if(auth()->user()->is_admin==1)
-        <div>
-            @foreach($users as $user)
-            <form action="{{route('getcalender',['id' =>$user->id])}}" method="get">
-                <select>
-                    <option value="0">select user</option>
-                        <option value="{{$user->id}}">{{$user->name}}</option>
-                </select>
-                <button type="submit" >Go</button>
-            </form>
-            @endforeach
-        </div>
+            <div>
+                @foreach($users as $user)
+                    <form action="{{route('getcalender',['id' =>$user->id])}}" method="get">
+                        <select>
+                            <option value="0">select user</option>
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                        </select>
+                        <button type="submit" >Go</button>
+                    </form>
+                @endforeach
+            </div>
         @endif
         <p>attendance:{{$daynumberofattend}}</p>
         <p>Absence:{{$absence}}</p>
@@ -75,13 +75,18 @@
                                  style="color: #ec4040 ">
                                 @foreach ($attends as $attend)
                                     <?php $att1 = $attend->where(['history' => $day, 'type' => 'presence', 'user_id' => $id])->first()?>
-                                    {{--                                        @if($att1 !=null)--}}
-                                    <p class="card-text">{{ in_array($day,$history)?'attend ='.\Illuminate\Support\Carbon::parse($att1->time)->format('H:i'):'not attendance'}}</p>
-                                    {{--                                   @endif--}}
+                                    @if($att1 !=null)
+                                        <p class="card-text">{{ in_array($day,$history)?'attend ='.\Illuminate\Support\Carbon::parse($att1->time)->format('H:i'):'not attendance'}}</p>
+                                    @endif
                                     <?php $att2 = $attend->where(['history' => $day, 'type' => 'leave', 'user_id' => $id])->first()?>
                                     @if($att2 !=null)
                                         <p class="card-text">{{ in_array($day,$history)?'leave ='.\Illuminate\Support\Carbon::parse($att2->time)->format('H:i'):''}}</p>
                                     @endif
+                                    @break
+                                    <?php $att1 = $attend->where(['history' => $day, 'type' => 'presence'])->first()?>
+                                    <p class="card-text">{{ in_array($day,$history)?'attend ='.\Illuminate\Support\Carbon::parse($att1->time)->format('H:i'):'not attendance'}}</p>
+                                    <?php $att2 = $attend->where(['history' => $day, 'type' => 'leave'])->first()?>
+                                    <p class="card-text">{{ in_array($day,$history)?'leave ='.\Illuminate\Support\Carbon::parse($att2->time)->format('H:i'):''}}</p>
                                     @break
                                 @endforeach
                             </div>
