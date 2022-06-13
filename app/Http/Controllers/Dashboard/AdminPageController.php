@@ -39,10 +39,10 @@ class AdminPageController extends Controller
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function getCalender(Request $request)
+    public function getCalender(Request $request,$id)
     {
         $current_month = $request->date ? Carbon::parse($request->date) : Carbon::now();
-        $dayOfTheWeek = $current_month->dayOfWeek;
+        $users = User::where(['is_admin' => 0, 'status' => 1])->get();
 
         $month_name = $current_month->format('F');
         $month = $current_month->month;
@@ -60,10 +60,10 @@ class AdminPageController extends Controller
         }
         $daysfirstweek = array_values($daynames);
 
-
-        $attends = Attendance::where(['user_id' => auth()->id()])->get();
+        $attends = Attendance::where(['user_id' => $id])->get();
         $daynumberofattend = 0;
         $absence = 0;
+        $history=[];
         foreach ($attends as $attend) {
             $history[] = $attend->history;
         }
@@ -98,8 +98,7 @@ class AdminPageController extends Controller
             $monthStartDate = $monthStartDate->addDay();
 
         }
-        return view('dashboard.admin_page.calender', compact('avarge_work_in_month','month_name', 'pickup_dates', 'attends', 'current_month', 'daynames', 'daysfirstweek', 'history', 'day_week_start', 'daynumberofattend', 'absence','daysmustattend','time_diff_minutes','time_diff_hours'));
+        return view('dashboard.admin_page.calender', compact('avarge_work_in_month','month_name', 'pickup_dates', 'attends', 'current_month', 'daynames', 'daysfirstweek', 'history', 'day_week_start', 'daynumberofattend', 'absence','daysmustattend','time_diff_minutes','time_diff_hours','id','users'));
     }
 
 }
-
