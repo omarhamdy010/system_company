@@ -60,6 +60,7 @@ class AdminPageController extends Controller
         $daysfirstweek = array_values($daynames);
 
         $attends = Attendance::where(['user_id' => auth()->id()])->get();
+
         $daynumberofattend = 0;
         $absence = 0;
         $history = [];
@@ -76,24 +77,6 @@ class AdminPageController extends Controller
             } else {
                 in_array(Carbon::parse($pickup_dates[$i - 1])->format('l'), $weekend) ? '' : $absence = $absence + 1;
             }
-            $daysmustattend = $absence + $daynumberofattend;
-            $avarge_work_in_month = 8 * $daysmustattend;
-            foreach ($attends as $attend) {
-                if ($attend->history == $pickup_dates[$i - 1]) {
-                    $att1 = $attend->where(['history' => $pickup_dates[$i - 1], 'type' => 'presence'])->first();
-                    $att2 = $attend->where(['history' => $pickup_dates[$i - 1], 'type' => 'leave'])->first();
-                    if ($att1->time != null || $att2->time != null) {
-                        $time_diff_hours += \Illuminate\Support\Carbon::parse($att1->time)->diff((\Illuminate\Support\Carbon::parse($att2->time)))->format('%h');
-                        $time_diff_minutes += \Illuminate\Support\Carbon::parse($att1->time)->diff((\Illuminate\Support\Carbon::parse($att2->time)))->format('%i');
-                    }
-                    break;
-                }
-            }
-            if (in_array($pickup_dates[$i - 1], $history)) {
-                in_array(Carbon::parse($pickup_dates[$i - 1])->format('l'), $weekend) ? '' : $daynumberofattend = $daynumberofattend + 1;
-            } else {
-                in_array(Carbon::parse($pickup_dates[$i - 1])->format('l'), $weekend) ? '' : $absence = $absence + 1;
-            }
 
             $daysmustattend = $absence + $daynumberofattend;
 
@@ -103,12 +86,12 @@ class AdminPageController extends Controller
                 if ($attend->history == $pickup_dates[$i - 1]) {
                     $att1 = $attend->where(['history' => $pickup_dates[$i - 1], 'type' => 'presence'])->first();
                     $att2 = $attend->where(['history' => $pickup_dates[$i - 1], 'type' => 'leave'])->first();
-                    if ($att1->time != null || $att2->time != null) {
+                    if ($att1 != null && $att2 != null) {
                         $time_diff_hours += \Illuminate\Support\Carbon::parse($att1->time)->diff((\Illuminate\Support\Carbon::parse($att2->time)))->format('%h');
                         $time_diff_minutes += \Illuminate\Support\Carbon::parse($att1->time)->diff((\Illuminate\Support\Carbon::parse($att2->time)))->format('%i');
                     }
-                    break;
                 }
+                break;
             }
             $monthStartDate = $monthStartDate->addDay();
         }
