@@ -48,8 +48,11 @@ class AdminPageController extends Controller
         $days = $current_month->month($month)->daysInMonth;
         $monthStartDate = $current_month->startOfMonth();
         $day_week_start = [];
+
         $weekend = ['Friday', 'Saturday'];
+
         $daynames = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
         foreach ($daynames as $key => $day) {
             if ($monthStartDate->format('l') == $day) {
                 break;
@@ -59,7 +62,7 @@ class AdminPageController extends Controller
         }
         $daysfirstweek = array_values($daynames);
 
-        $attends = Attendance::where(['user_id' => auth()->id()])->get();
+        $attends = Attendance::where(['user_id' => $id])->get();
 
         $daynumberofattend = 0;
         $absence = 0;

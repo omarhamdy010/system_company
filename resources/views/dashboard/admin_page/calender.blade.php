@@ -73,19 +73,21 @@
                             </div>
                             <div class="card-body {{in_array($day,$history) ? 'attend': 'absent'}}" id="card111"
                                  style="color: #ec4040 ">
+                                @if($attends->isEmpty())
+                                    <p class="card-text">not attendance</p>
+                                @else
                             @foreach ($attends as $attend)
-{{--                                    @dd('saadfsafd')--}}
                                 <?php $att1 = $attend->where(['history' => $day, 'type' => 'presence', 'user_id' => $id])->first()?>
 
                                     <p class="card-text">
                                         {{in_array($day,$history) && $att1 != null ?'attend ='.\Illuminate\Support\Carbon::parse($att1->time)->format('H:i'):'not attendance'}}
                                     </p>
                                     <?php $att2 = $attend->where(['history' => $day, 'type' => 'leave', 'user_id' => $id])->first()?>
-
                                     <p class="card-text">
                                         {{in_array($day,$history) && $att2 != null ?'leave ='.\Illuminate\Support\Carbon::parse($att2->time)->format('H:i'):''}} </p>
                                     @break
                                 @endforeach
+                                    @endif
                             </div>
                         </div>
                     </div>
