@@ -14,15 +14,15 @@
     <section class="content">
         @if(auth()->user()->is_admin==1)
             <div>
-                @foreach($users as $user)
-                    <form action="{{route('getcalender',['id' =>$user->id])}}" method="get">
-                        <select>
-                            {{--                            <option value=1>select user</option>--}}
+                <form method="get">
+                    <select name="id">
+                        <option value=1>select user</option>
+                    @foreach($users as $user)
                             <option value="{{$user->id}}">{{$user->name}}</option>
-                        </select>
-                        <button type="submit">Go</button>
-                    </form>
-                @endforeach
+                        @endforeach
+                    </select>
+                    <button type="submit">Go</button>
+                </form>
             </div>
         @endif
         <p>attendance:{{$daynumberofattend}}</p>
@@ -76,18 +76,17 @@
                                 @if($attends->isEmpty())
                                     <p class="card-text">not attendance</p>
                                 @else
-                            @foreach ($attends as $attend)
-                                <?php $att1 = $attend->where(['history' => $day, 'type' => 'presence', 'user_id' => $id])->first()?>
-
-                                    <p class="card-text">
-                                        {{in_array($day,$history) && $att1 != null ?'attend ='.\Illuminate\Support\Carbon::parse($att1->time)->format('H:i'):'not attendance'}}
-                                    </p>
-                                    <?php $att2 = $attend->where(['history' => $day, 'type' => 'leave', 'user_id' => $id])->first()?>
-                                    <p class="card-text">
-                                        {{in_array($day,$history) && $att2 != null ?'leave ='.\Illuminate\Support\Carbon::parse($att2->time)->format('H:i'):''}} </p>
-                                    @break
-                                @endforeach
-                                    @endif
+                                    @foreach ($attends as $attend)
+                                        <?php $att1 = $attend->where(['history' => $day, 'type' => 'presence', 'user_id' => $id])->first()?>
+                                        <p class="card-text">
+                                            {{in_array($day,$history) && $att1 != null ?'attend ='.\Illuminate\Support\Carbon::parse($att1->time)->format('H:i'):'not attendance'}}
+                                        </p>
+                                        <?php $att2 = $attend->where(['history' => $day, 'type' => 'leave', 'user_id' => $id])->first()?>
+                                        <p class="card-text">
+                                            {{in_array($day,$history) && $att2 != null ?'leave ='.\Illuminate\Support\Carbon::parse($att2->time)->format('H:i'):''}} </p>
+                                        @break
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>

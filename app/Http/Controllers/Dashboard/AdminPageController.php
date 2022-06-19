@@ -39,8 +39,9 @@ class AdminPageController extends Controller
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function getCalender(Request $request, $id)
+    public function getCalender(Request $request)
     {
+        $id = $request->get('id') ?? auth()->id();
         $current_month = $request->date ? Carbon::parse($request->date) : Carbon::now();
         $users = User::where(['is_admin' => 0, 'status' => 1])->get();
         $month_name = $current_month->format('F');
