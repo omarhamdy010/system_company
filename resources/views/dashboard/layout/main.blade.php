@@ -31,7 +31,7 @@
 
     <!-- Main Sidebar Container -->
 @if(auth()->user()->status==1)
-@include('dashboard.layout.sidebar')
+    @include('dashboard.layout.sidebar')
 @endif
 
 <!-- Content Wrapper. Contains page content -->

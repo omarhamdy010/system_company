@@ -19,6 +19,9 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::resource('/admin', '\App\Http\Controllers\Dashboard\AdminPageController');
 });
+
+Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
+Route::post('checkLogin', [App\Http\Controllers\LoginController::class, 'checkLogin'])->name('checkLogin');
 Route::middleware(['auth'])->group(function () {
 
     Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
@@ -39,7 +42,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/calc', '\App\Http\Controllers\Dashboard\ProfileController@calc')->name('calc');
         Route::Delete('/deleteimage/{id}', '\App\Http\Controllers\Dashboard\ProfileController@destroy')->name('deleteimage');
     });
+
 });
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
