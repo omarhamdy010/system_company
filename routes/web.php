@@ -21,7 +21,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 });
 
 Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
-Route::post('checkLogin', [App\Http\Controllers\LoginController::class, 'checkLogin'])->name('checkLogin');
+Route::get('/register', [App\Http\Controllers\LoginController::class, 'register'])->name('register');
+Route::post('/checkLogin', [App\Http\Controllers\LoginController::class, 'checkLogin'])->name('checkLogin');
+Route::post('/checkRegister', [App\Http\Controllers\LoginController::class, 'checkRegister'])->name('checkRegister');
 Route::middleware(['auth'])->group(function () {
 
     Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
