@@ -42,4 +42,6 @@ Route::get('/register', [App\Http\Controllers\LoginController::class, 'register'
 Route::post('/checkLogin', [App\Http\Controllers\LoginController::class, 'checkLogin'])->name('checkLogin');
 Route::post('/checkRegister', [App\Http\Controllers\LoginController::class, 'checkRegister'])->name('checkRegister');
 Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
+Route::get('/reset_password', [App\Http\Controllers\LoginController::class, 'reset_password'])->name('reset_password');
+Route::get('/reset', [App\Http\Controllers\LoginController::class, 'reset'])->name('reset');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -54,13 +54,21 @@ class LoginController extends Controller
             return redirect()->intended('/presence')
                 ->with('success', 'Signed in');
         }
+        Session::put('error','error login');
         return redirect()->back()->with('fail', 'Login details are not valid');
     }
 
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success','you logged out');
     }
 
+    public function reset_password(){
+        return view('login_register.reset_password');
+    }
+
+    public function reset(){
+
+    }
 }

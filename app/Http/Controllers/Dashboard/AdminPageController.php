@@ -7,6 +7,7 @@ use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AdminPageController extends Controller
 {
@@ -39,11 +40,12 @@ class AdminPageController extends Controller
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function getCalender(Request $request,$id)
+    public function getCalender(Request $request)
     {
+
         $current_month = $request->date ? Carbon::parse($request->date) : Carbon::now();
         $users = User::where(['is_admin' => 0, 'status' => 1])->get();
-
+        $id = $request->id??Auth::id();
         $month_name = $current_month->format('F');
         $month = $current_month->month;
         $days = $current_month->month($month)->daysInMonth;

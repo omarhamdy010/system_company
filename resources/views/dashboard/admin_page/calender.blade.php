@@ -14,15 +14,15 @@
     <section class="content">
         @if(auth()->user()->is_admin==1)
             <div>
-                @foreach($users as $user)
-                    <form action="{{route('getcalender',['id' =>$user->id])}}" method="get">
-                        <select>
+                    <form action="{{route('getcalender')}}" method="get">
+                        <select name="id">
                             <option value="0">select user</option>
+                            @foreach($users as $user)
                             <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endforeach
                         </select>
                         <button type="submit" >Go</button>
                     </form>
-                @endforeach
             </div>
         @endif
         <p>attendance:{{$daynumberofattend}}</p>
