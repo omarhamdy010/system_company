@@ -37,7 +37,10 @@
                     <div class="card-body">
                         <form method="POST" action="{{route('checkLogin')}}">
                             @csrf
-
+                            @if(\Illuminate\Support\Facades\Session::has('fail'))
+                                <div
+                                    class="alert alert-danger">{{\Illuminate\Support\Facades\Session::get('fail')}}</div>
+                            @endif
                             <div class="row mb-3">
                                 <label for="phone" class="col-md-4 col-form-label text-md-end">{{ __('phone') }}</label>
 

@@ -2,38 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    public function login(){
+    public function register()
+    {
+        return view('login_register.register');
+    }
+
+    public function checkRegister(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users|email',
+            'phone' => 'required|unique:users',
+            'password' => 'required|min:5|max:12',
+        ]);
+        $user = User::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'phone' => $request->get('phone'),
+            'password' => Hash::make($request->get('password')),
+        ]);
+        if ($user) {
+            return redirect()->back()->with('success', 'user is created');
+        } else {
+            return redirect()->back()->with('fail', 'some thing wrong');
+        }
+    }
+
+    public function login()
+    {
         return view('login_register.login');
     }
 
-    public function checkRegister(Request $request){
-
-        $request->validate([
-        'name'=>'required',
-        'email'=>'required|unique:users|email',
-        'phone'=>'required|unique:users',
-        'password'=>'required|min:5|max:12',
-        ]);
-    }
-    public function checkLogin(Request $request){
+    public function checkLogin(Request $request)
+    {
         $request->validate([
             'phone' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:5|max:12',
         ]);
-        $credentials = $request->only('phone', 'password');
-        if (Auth::attempt($credentials)) {
+        $user = User::where('phone',$request->get('phone'))->first();
+
+        if ($user && Hash::check($request->get('password'),$user->password)) {
+            Session::put('login_id',$user->id);
             return redirect()->intended('/presence')
-                ->withSuccess('Signed in');
+                    ->with('success', 'Signed in');
         }
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect()->back()->with('fail', 'Login details are not valid');
     }
 
-    public function register(){
-        return view('login_register.register');
+    public function logout(){
+        if(Session::has('login_id')){
+            Session::remove('login_id');
+            return redirect()->route('login');
+        }
     }
+
 }

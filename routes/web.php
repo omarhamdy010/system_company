@@ -24,11 +24,13 @@ Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->na
 Route::get('/register', [App\Http\Controllers\LoginController::class, 'register'])->name('register');
 Route::post('/checkLogin', [App\Http\Controllers\LoginController::class, 'checkLogin'])->name('checkLogin');
 Route::post('/checkRegister', [App\Http\Controllers\LoginController::class, 'checkRegister'])->name('checkRegister');
+Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+//    Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
     Route::resource('/presence', '\App\Http\Controllers\Dashboard\AttendanceController');
+
     Route::group(['middleware' => ['auth', 'active']], function () {
 
         Route::get('changeStatus', '\App\Http\Controllers\Dashboard\AdminPageController@changeStatus');

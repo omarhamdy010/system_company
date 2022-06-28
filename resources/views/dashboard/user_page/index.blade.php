@@ -21,6 +21,11 @@
 
     <!-- Main content -->
     <section class="content">
+
+        @if(\Illuminate\Support\Facades\Session::has('success'))
+            <div
+                class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('success')}}</div>
+        @endif
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
