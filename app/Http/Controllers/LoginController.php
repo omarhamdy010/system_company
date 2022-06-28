@@ -48,21 +48,19 @@ class LoginController extends Controller
             'phone' => 'required',
             'password' => 'required|min:5|max:12',
         ]);
-        $user = User::where('phone',$request->get('phone'))->first();
 
-        if ($user && Hash::check($request->get('password'),$user->password)) {
-            Session::put('login_id',$user->id);
+        $credentials = $request->only('password', 'phone');
+        if (Auth::attempt($credentials)) {
             return redirect()->intended('/presence')
-                    ->with('success', 'Signed in');
+                ->with('success', 'Signed in');
         }
         return redirect()->back()->with('fail', 'Login details are not valid');
     }
 
-    public function logout(){
-        if(Session::has('login_id')){
-            Session::remove('login_id');
-            return redirect()->route('login');
-        }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
     }
 
 }

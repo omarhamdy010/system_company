@@ -19,9 +19,10 @@
                 <i class='fas fa-sign-out-alt'></i>
             </a>
             <a href="{{ route('logout') }}"
-               onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+{{--               onclick="event.preventDefault(); document.getElementById('frm-logout').submit();"--}}
+            >
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <form id="frm-logout" action="{{ route('logout') }}" method="POST" >
+                    <form id="frm-logout" action="{{ route('logout') }}" method="get" >
                         {{ csrf_field() }}
                     </form>
                     Logout
