@@ -57,7 +57,7 @@
                                             {{ __('Remember Me') }}
                                         </label>
                                         @if(\Illuminate\Support\Facades\Session::has('error'))
-                                            <a href="{{route('reset')}}" style="padding: 50px">Reset Password</a>
+                                            <a href="{{route('forget.password.get')}}" style="padding: 50px">Reset Password</a>
                                         @endif
                                     </div>
                                 </div>

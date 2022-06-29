@@ -64,11 +64,4 @@ class LoginController extends Controller
         return redirect()->route('login')->with('success','you logged out');
     }
 
-    public function reset_password(){
-        return view('login_register.reset_password');
-    }
-
-    public function reset(){
-
-    }
 }
