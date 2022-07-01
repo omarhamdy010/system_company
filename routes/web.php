@@ -27,7 +27,7 @@ Route::middleware(['is_auth'])->group(function () {
         Route::get('changeStatus', '\App\Http\Controllers\Dashboard\AdminPageController@changeStatus');
         Route::get('getAttendance/{id}', '\App\Http\Controllers\Dashboard\AdminPageController@getAttendance')->name('getAttendance');
         Route::get('getcalender', '\App\Http\Controllers\Dashboard\AdminPageController@getCalender')->name('getcalender');
-        Route::post('/store', '\App\Http\Controllers\Dashboard\AttendanceController@store')->name('presence.store');
+        Route::post('store', '\App\Http\Controllers\Dashboard\AttendanceController@store');
         Route::get('/calender', '\App\Http\Controllers\Dashboard\AttendanceController@calender')->name('calender');
         Route::get('/profile/{id}/edit', '\App\Http\Controllers\Dashboard\ProfileController@profile')->name('presence.profile');
         Route::put('/updateprofile/{id}', '\App\Http\Controllers\Dashboard\ProfileController@updateprofile')->name('updateprofile');
@@ -42,12 +42,9 @@ Route::get('/register', [App\Http\Controllers\LoginController::class, 'register'
 Route::post('/checkLogin', [App\Http\Controllers\LoginController::class, 'checkLogin'])->name('checkLogin');
 Route::post('/checkRegister', [App\Http\Controllers\LoginController::class, 'checkRegister'])->name('checkRegister');
 Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
-//Route::get('/reset_password', [App\Http\Controllers\ForgotPasswordController::class, 'reset_password'])->name('reset_password');
-//Route::post('/reset', [App\Http\Controllers\ForgotPasswordController::class, 'reset'])->name('reset');
-//Route::get('/reset-password/{token}', 'ResetPasswordController@getPassword');
-//Route::post('/reset-password', 'ResetPasswordController@updatePassword');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('forget-password', [\App\Http\Controllers\ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
 Route::post('forget-password', [\App\Http\Controllers\ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [\App\Http\Controllers\ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [\App\Http\Controllers\ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+

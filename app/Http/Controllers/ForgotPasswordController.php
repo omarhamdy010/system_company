@@ -34,9 +34,11 @@ class ForgotPasswordController extends Controller
             'token' =>$token,
         ]);
         Mail::send('login_register.password.verify', ['token' =>$token], function ($message) use ($request) {
+//            dd($message);
             $message->to($request->get('email'));
             $message->subject('Reset Password Notification');
             $message->from('hamdyomar065@gmail.com','DoNotReply');
+
         });
         return back()->with('message', 'We have e-mailed your password reset link!');
     }
@@ -70,7 +72,9 @@ class ForgotPasswordController extends Controller
         $user = User::where('email', $request->email)
             ->update(['password' => Hash::make($request->password)]);
 //        dd('success');
+
         DB::table('password_resets')->where(['email' => $request->email])->delete();
+
         return redirect('/login')->with('message', 'Your password has been changed!');
     }
 }
