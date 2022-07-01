@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Password_resets extends Model
+class Password_Resets extends Model
 {
     use HasFactory;
-    protected $guarded =[];
+    protected $fillable = [
+      'created_at','email','token'
+    ];
 }
