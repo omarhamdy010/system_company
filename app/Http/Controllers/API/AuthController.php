@@ -56,7 +56,8 @@ class AuthController extends Controller
 
     public function api_logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+
+        auth('api')->user()->tokens()->delete();
 
         return [
             'message' => 'You have successfully logged out and the token was successfully deleted'

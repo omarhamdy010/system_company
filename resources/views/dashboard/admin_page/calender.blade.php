@@ -16,7 +16,7 @@
             <div>
                     <form action="{{route('getcalender')}}" method="get">
                         <select name="id">
-                            <option value="0">select user</option>
+                            <option value="">select user</option>
                             @foreach($users as $user)
                             <option value="{{$user->id}}">{{$user->name}}</option>
                             @endforeach
