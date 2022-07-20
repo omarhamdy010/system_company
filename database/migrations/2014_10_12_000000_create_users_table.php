@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone')->unique();
+            $table->string('phone')->default('1234567890')->unique();
             $table->boolean('is_admin')->default(0);
             $table->boolean('status')->default(0);
             $table->string('image')->default('default.png');
