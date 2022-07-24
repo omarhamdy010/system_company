@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\rival\rival;
+use App\Http\Controllers\salary\salary;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +17,6 @@ class ProfileController extends Controller
     {
         $this->middleware('auth');
     }
-
     public function profile()
     {
         return view('dashboard.user_page.page');

@@ -65,7 +65,9 @@
                                             <input data-id="{{$user->id}}" class="toggle-class this_toggle"  type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $user->status ? 'checked' : '' }}>
                                         </td>
                                         <td><img src="{{$user->image_path}}" width="75px" height="75px"></td>
-                                        <td>{{$user->salary}}</td>
+                                        <td><input value="{{$user->salary}}" class="update_salary"  data-id="{{$user->id}}" name="salary" >
+                                        <input type="hidden" value="{{csrf_token()}}" class="token">
+                                        </td>
                                         <td><a class="btn btn-primary btn-sm" href="{{route('getAttendance',['id'=>$user->id])}}">Attendance</a></td>
                                     </tr>
                                     @endforeach
@@ -96,7 +98,28 @@
                     console.log(data.success)
                 }
             });
+        });
+
+
+        $('.update_salary').keyup(function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var value = $(this).val();
+            var token = $('.token').val();
+
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: '/updatesalary/'+id,
+                data: {
+                    'value':value,'id':id,
+                },
+                success: function(data){
+                    console.log(data.success)
+                }
+            });
         })
+
 
     </script>
 

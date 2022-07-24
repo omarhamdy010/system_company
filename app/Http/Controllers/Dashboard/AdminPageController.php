@@ -18,16 +18,15 @@ class AdminPageController extends Controller
 
     public function index()
     {
-        $users = User::where('is_admin', 0)->get();
-        return view('dashboard.admin_page.index_admin', compact('users'));
+        return view('dashboard.admin_page.index_admin');
     }
 
     public function getAttendance($id)
     {
-        $users = User::where('id', $id)->first();
+        $user_attend = User::where('id', $id)->first();
         $attendanceday = [];
         $userdata = Attendance::where(['user_id' => $id, 'type' => 'presence'])->get();
-        return view('dashboard.admin_page.attendance', compact('users', 'userdata', 'attendanceday'));
+        return view('dashboard.admin_page.attendance', compact('user_attend', 'userdata', 'attendanceday'));
     }
 
 
@@ -45,13 +44,13 @@ class AdminPageController extends Controller
 
         $current_month = $request->date ? Carbon::parse($request->date) : Carbon::now();
         $users = User::where(['is_admin' => 0, 'status' => 1])->get();
-        $id = $request->id??Auth::id();
+        $id = $request->id ?? Auth::id();
         $month_name = $current_month->format('F');
         $month = $current_month->month;
         $days = $current_month->month($month)->daysInMonth;
         $monthStartDate = $current_month->startOfMonth();
         $day_week_start = [];
-        $weekend=['Friday','Saturday'];
+        $weekend = ['Friday', 'Saturday'];
         $daynames = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
         foreach ($daynames as $key => $day) {
             if ($monthStartDate->format('l') == $day) {
@@ -65,31 +64,33 @@ class AdminPageController extends Controller
         $attends = Attendance::where(['user_id' => $id])->get();
         $daynumberofattend = 0;
         $absence = 0;
-        $history=[];
+        $history = [];
         foreach ($attends as $attend) {
             $history[] = $attend->history;
         }
-        $time_diff_hours=0;
-        $time_diff_minutes =0;
+        $time_diff_hours = 0;
+        $time_diff_minutes = 0;
         $pickup_dates = [];
 
         for ($i = 1; $i <= $days; $i++) {
             $pickup_dates[] = $monthStartDate->toDateString();
-            if (in_array($pickup_dates[$i-1],$history))
-            {
-                in_array(Carbon::parse($pickup_dates[$i-1])->format('l'),$weekend)?'': $daynumberofattend = $daynumberofattend+1;
-            }else{
-                in_array(Carbon::parse($pickup_dates[$i-1])->format('l'),$weekend)?'':  $absence = $absence+1;
+            if (in_array($pickup_dates[$i - 1], $history)) {
+                in_array(Carbon::parse($pickup_dates[$i - 1])->format('l'), $weekend) ? '' : $daynumberofattend = $daynumberofattend + 1;
+            } else {
+                in_array(Carbon::parse($pickup_dates[$i - 1])->format('l'), $weekend) ? '' : $absence = $absence + 1;
             }
 
-            $daysmustattend= $absence +$daynumberofattend;
+            $daysmustattend = $absence + $daynumberofattend;
+            $avarge_work_in_month = 8 * $daysmustattend;
+            //salary
+            $user = $users->where('id',$request->id)->first();
+            $salaryofday = $user->salary/30;
+            $totalsalary= $user->salary- $salaryofday*$absence;
 
-            $avarge_work_in_month=8*$daysmustattend;
-
-            foreach ($attends as $attend){
-                if ($attend->history == $pickup_dates[$i-1]) {
-                    $att1 = $attend->where(['history' => $pickup_dates[$i-1] , 'type' => 'presence'])->first();
-                    $att2 = $attend->where(['history' => $pickup_dates[$i-1] , 'type' => 'leave'])->first();
+            foreach ($attends as $attend) {
+                if ($attend->history == $pickup_dates[$i - 1]) {
+                    $att1 = $attend->where(['history' => $pickup_dates[$i - 1], 'type' => 'presence'])->first();
+                    $att2 = $attend->where(['history' => $pickup_dates[$i - 1], 'type' => 'leave'])->first();
                     if ($att1->time != null || $att2->time != null) {
                         $time_diff_hours += \Illuminate\Support\Carbon::parse($att1->time)->diff((\Illuminate\Support\Carbon::parse($att2->time)))->format('%h');
                         $time_diff_minutes += \Illuminate\Support\Carbon::parse($att1->time)->diff((\Illuminate\Support\Carbon::parse($att2->time)))->format('%i');
@@ -100,7 +101,15 @@ class AdminPageController extends Controller
             $monthStartDate = $monthStartDate->addDay();
 
         }
-        return view('dashboard.admin_page.calender', compact('avarge_work_in_month','month_name', 'pickup_dates', 'attends', 'current_month', 'daynames', 'daysfirstweek', 'history', 'day_week_start', 'daynumberofattend', 'absence','daysmustattend','time_diff_minutes','time_diff_hours','id','users'));
+        return view('dashboard.admin_page.calender', compact('avarge_work_in_month', 'totalsalary','month_name', 'pickup_dates', 'attends', 'current_month', 'daynames', 'daysfirstweek', 'history', 'day_week_start', 'daynumberofattend', 'absence', 'daysmustattend', 'time_diff_minutes', 'time_diff_hours', 'id', 'users'));
     }
 
+    public function updateSalary(Request $request)
+    {
+        $user= User::where('id',$request->id)->first();
+        $user->update([
+           'salary'=>$request->value,
+        ]);
+
+    }
 }

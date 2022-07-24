@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
+    public function index(){
+        return view('dashboard.user.users');
+    }
     public function register()
     {
         return view('login_register.register');

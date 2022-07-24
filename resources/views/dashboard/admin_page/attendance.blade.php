@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>attendance {{$users->name}}</h1>
+                    <h1>attendance {{$user_attend->name}}</h1>
                 </div>
                 <div class="col-sm-6">
                      {{--                        <ol class="breadcrumb float-sm-right">--}}
@@ -54,16 +54,16 @@
                                 @foreach($userdata as $data)
                                     <tr>
                                         <?php
-                                        $presence = \App\Models\Attendance::where(['user_id'=>$users->id ,'history'=>$data->history, 'type'=>'presence'])->first();
-                                        $leave = \App\Models\Attendance::where(['user_id'=>$users->id , 'history'=>$data->history,'type'=>'leave'])->first();
+                                        $presence = \App\Models\Attendance::where(['user_id'=>$user_attend->id ,'history'=>$data->history, 'type'=>'presence'])->first();
+                                        $leave = \App\Models\Attendance::where(['user_id'=>$user_attend->id , 'history'=>$data->history,'type'=>'leave'])->first();
                                         if ($leave) $total = (new \Carbon\Carbon($presence->time))->diff(new \Carbon\Carbon($leave->time))->format('%h:%I:%s');
                                         ?>
-                                        <td>{{$users->name}}</td>
-                                        <td>{{$users->email}}</td>
-                                        <td>{{$users->phone}}</td>
+                                        <td>{{$user_attend->name}}</td>
+                                        <td>{{$user_attend->email}}</td>
+                                        <td>{{$user_attend->phone}}</td>
                                         <td>{{$presence->time}}</td>
-                                        <td>{{$leave?$leave->time:'00:00:00'}}</td>
-                                        <td>{{$leave ? $total:'00:00:00' }}</td>
+                                        <td>{{$leave?$leave->time:'-:-:-'}}</td>
+                                        <td>{{$leave ? $total:'-:-:-' }}</td>
                                         <td>{{$data->history}}</td>
                                     </tr>
                                 @endforeach

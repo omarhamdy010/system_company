@@ -20,8 +20,8 @@ Route::group(['middleware' => ['is_auth', 'admin']], function () {
     Route::resource('/admin', '\App\Http\Controllers\Dashboard\AdminPageController');
 });
 
-Route::middleware(['is_auth'])->group(function () {
 
+Route::middleware(['is_auth'])->group(function () {
     Route::resource('/presence', '\App\Http\Controllers\Dashboard\AttendanceController');
     Route::group(['middleware' => ['active']], function () {
         Route::get('changeStatus', '\App\Http\Controllers\Dashboard\AdminPageController@changeStatus');
@@ -31,6 +31,7 @@ Route::middleware(['is_auth'])->group(function () {
         Route::get('/calender', '\App\Http\Controllers\Dashboard\AttendanceController@calender')->name('calender');
         Route::get('/profile/{id}/edit', '\App\Http\Controllers\Dashboard\ProfileController@profile')->name('presence.profile');
         Route::put('/updateprofile/{id}', '\App\Http\Controllers\Dashboard\ProfileController@updateprofile')->name('updateprofile');
+        Route::get('/updatesalary/{id}', '\App\Http\Controllers\Dashboard\AdminPageController@updateSalary')->name('updateSalary');
         Route::put('/image/{id}', '\App\Http\Controllers\Dashboard\ProfileController@updateimage')->name('updateimage');
         Route::get('/calc', '\App\Http\Controllers\Dashboard\ProfileController@calc')->name('calc');
         Route::Delete('/deleteimage/{id}', '\App\Http\Controllers\Dashboard\ProfileController@destroy')->name('deleteimage');
@@ -39,12 +40,14 @@ Route::middleware(['is_auth'])->group(function () {
 });
 Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login')->middleware('AlreadyLogedIn');
 Route::get('/register', [App\Http\Controllers\LoginController::class, 'register'])->name('register')->middleware('AlreadyLogedIn');
-Route::post('/checkLogin', [App\Http\Controllers\LoginController::class, 'checkLogin'])->name('checkLogin');
-Route::post('/checkRegister', [App\Http\Controllers\LoginController::class, 'checkRegister'])->name('checkRegister');
 Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('forget-password', [\App\Http\Controllers\ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
-Route::post('forget-password', [\App\Http\Controllers\ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::get('reset-password/{token}', [\App\Http\Controllers\ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('/checkLogin', [App\Http\Controllers\LoginController::class, 'checkLogin'])->name('checkLogin');
+Route::post('/checkRegister', [App\Http\Controllers\LoginController::class, 'checkRegister'])->name('checkRegister');
+Route::post('forget-password', [\App\Http\Controllers\ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
 Route::post('reset-password', [\App\Http\Controllers\ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
+Route::get('store_user',[\App\Http\Controllers\PayOrderController::class,'store']);
+Route::get('users/users',[\App\Http\Controllers\LoginController::class,'index']);
