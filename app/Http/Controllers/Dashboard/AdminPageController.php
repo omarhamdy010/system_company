@@ -18,15 +18,20 @@ class AdminPageController extends Controller
 
     public function index()
     {
-        return view('dashboard.admin_page.index_admin');
+        $users = User::where('is_admin', 0)->get();
+        return view('dashboard.admin_page.index_admin', compact('users'));
     }
 
     public function getAttendance($id)
     {
+
+        $users = User::where('is_admin', 0)->get();
+
         $user_attend = User::where('id', $id)->first();
         $attendanceday = [];
         $userdata = Attendance::where(['user_id' => $id, 'type' => 'presence'])->get();
-        return view('dashboard.admin_page.attendance', compact('user_attend', 'userdata', 'attendanceday'));
+
+        return view('dashboard.admin_page.attendance', compact('user_attend', 'userdata', 'attendanceday', 'users'));
     }
 
 
@@ -83,9 +88,12 @@ class AdminPageController extends Controller
             $daysmustattend = $absence + $daynumberofattend;
             $avarge_work_in_month = 8 * $daysmustattend;
             //salary
-            $user = $users->where('id',$request->id)->first();
-            $salaryofday = $user->salary/30;
-            $totalsalary= $user->salary- $salaryofday*$absence;
+            $totalsalary = \auth()->user()->salary;
+            $user = $users->where('id', $request->id)->first();
+            if ($user) {
+                $salaryofday = $user->salary / 30;
+                $totalsalary = $user->salary - $salaryofday * $absence;
+            }
 
             foreach ($attends as $attend) {
                 if ($attend->history == $pickup_dates[$i - 1]) {
@@ -101,14 +109,14 @@ class AdminPageController extends Controller
             $monthStartDate = $monthStartDate->addDay();
 
         }
-        return view('dashboard.admin_page.calender', compact('avarge_work_in_month', 'totalsalary','month_name', 'pickup_dates', 'attends', 'current_month', 'daynames', 'daysfirstweek', 'history', 'day_week_start', 'daynumberofattend', 'absence', 'daysmustattend', 'time_diff_minutes', 'time_diff_hours', 'id', 'users'));
+        return view('dashboard.admin_page.calender', compact('avarge_work_in_month', 'totalsalary', 'month_name', 'pickup_dates', 'attends', 'current_month', 'daynames', 'daysfirstweek', 'history', 'day_week_start', 'daynumberofattend', 'absence', 'daysmustattend', 'time_diff_minutes', 'time_diff_hours', 'id', 'users'));
     }
 
     public function updateSalary(Request $request)
     {
-        $user= User::where('id',$request->id)->first();
+        $user = User::where('id', $request->id)->first();
         $user->update([
-           'salary'=>$request->value,
+            'salary' => $request->value,
         ]);
 
     }

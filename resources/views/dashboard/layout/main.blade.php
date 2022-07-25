@@ -31,7 +31,7 @@
 <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-@if(\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->status==1)
+@if(auth()->check() && auth()->user()->status==1)
         @include('dashboard.layout.sidebar')
 @endif
 

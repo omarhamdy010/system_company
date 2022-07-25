@@ -50,4 +50,3 @@ Route::post('forget-password', [\App\Http\Controllers\ForgotPasswordController::
 Route::post('reset-password', [\App\Http\Controllers\ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 Route::get('store_user',[\App\Http\Controllers\PayOrderController::class,'store']);
-Route::get('users/users',[\App\Http\Controllers\LoginController::class,'index']);

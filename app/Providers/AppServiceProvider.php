@@ -20,12 +20,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(PaymentGatewayContract::class, function ($app){
-            if (Request::has('credit')){
-                return new CredictPaymentGateway('usd');
-            }
-            return new BankPaymentGateway('usd');
-        });
+//        $this->app->singleton(PaymentGatewayContract::class, function ($app){
+//            if (Request::has('credit')){
+//                return new CredictPaymentGateway('usd');
+//            }
+//            return new BankPaymentGateway('usd');
+//        });
     }
 
 
@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
 //            $views->with('users',User::where('is_admin', 0)->orderBy('name')->get());
 //        });
 
-        View::composer(['dashboard.*'],UsersComposer::class);
+//        View::composer(['dashboard.*'],UsersComposer::class);
 
     }
 }

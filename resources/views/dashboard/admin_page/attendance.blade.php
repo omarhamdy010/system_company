@@ -1,12 +1,15 @@
-@extends('dashboard.layout.main')
 
+
+@extends('dashboard.layout.main')
 @section('content')
+
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>attendance {{$user_attend->name}}</h1>
+{{--                    <h1>attendance {{$user_attend->name}}</h1>--}}
                 </div>
                 <div class="col-sm-6">
                      {{--                        <ol class="breadcrumb float-sm-right">--}}

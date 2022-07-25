@@ -19,7 +19,8 @@ class ProfileController extends Controller
     }
     public function profile()
     {
-        return view('dashboard.user_page.page');
+        $users=User::where('is_admin', 0)->get();
+        return view('dashboard.user_page.page',compact('users'));
     }
 
     public function updateprofile(Request $request, $id)

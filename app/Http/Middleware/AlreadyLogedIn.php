@@ -17,7 +17,7 @@ class AlreadyLogedIn
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()&& (url('login')==$request->url()||url('register')==$request->url())){
+        if (Auth::check()&& (url('login')==$request->url()|| url('register')==$request->url())){
             return  redirect()->back();
         }
         return $next($request);
