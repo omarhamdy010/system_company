@@ -48,28 +48,32 @@
                                                 <table class="table mb-0">
                                                     <thead>
                                                     <tr>
-                                                        <th>النوع</th>
-                                                        <th>وقت</th>
+{{--                                                        <th>النوع</th>--}}
+{{--                                                        <th>وقت</th>--}}
                                                         <th>التاريخ</th>
-                                                        <th>حضور</th>
-                                                        <th>انصراف</th>
+                                                        <th>وقت الحضور</th>
+                                                        <th>وقت الانصراف</th>
                                                         <th>ساعات العمل</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody class="user_table">
                                                     @foreach($presence_users as $presence_user )
                                                         <?php
-                                                            $presence = \App\Models\Attendance::where(['user_id'=>auth()->user()->id ,'history'=>$presence_user->history, 'type'=>'presence'])->first();
-                                                            $leave = \App\Models\Attendance::where(['user_id'=>auth()->user()->id , 'history'=>$presence_user->history,'type'=>'leave'])->first();
-                                                            if ($leave) $total = (new \Carbon\Carbon($presence->time))->diff(new \Carbon\Carbon($leave->time))->format('%h:%I:%s');
+                                                        $presence = \App\Models\Attendance::where(['user_id' => auth()->user()->id, 'history' => $presence_user->history, 'type' => 'presence'])->first();
+                                                        $leave = \App\Models\Attendance::where(['user_id' => auth()->user()->id, 'history' => $presence_user->history, 'type' => 'leave'])->first();
+                                                        if ($leave)
+                                                            {$total = (new \Carbon\Carbon($presence->time))->diff(new \Carbon\Carbon($leave->time))->format('%h:%I:%s');
+                                                            }else{$total = (new \Carbon\Carbon($presence->time))->diff( \Carbon\Carbon::now())->format('%h:%I:%s');}
                                                         ?>
                                                         <tr class="table-info">
-                                                            <td>{{$presence_user->type}}</td>
-                                                            <td>{{$presence_user->time}}</td>
-                                                            <td>{{$presence_user->history}}</td>
-                                                            <td>{{$presence->time}}</td>
-                                                            <td>{{$leave?$leave->time:'00:00:00'}}</td>
-                                                            <td>{{$leave ? $total:'00:00:00' }}</td>
+                                                            @if($presence_user->type == 'presence')
+{{--                                                                <td>{{$presence_user->type}}</td>--}}
+{{--                                                                <td>{{$presence_user->time}}</td>--}}
+                                                                <td>{{$presence_user->history}}</td>
+                                                                <td>{{$presence->time}}</td>
+                                                                <td>{{$leave?$leave->time:'--:--:--'}}</td>
+                                                                <td>{{$total}}</td>
+                                                            @endif
                                                         </tr>
                                                     @endforeach
                                                     </tbody>

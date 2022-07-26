@@ -77,13 +77,21 @@
                                  style="color: #ec4040 ">
                                 @foreach ($attends as $attend)
                                     <?php $att1 = $attend->where(['history' => $day, 'type' => 'presence', 'user_id' => $id])->first()?>
-                                    <p class="card-text">{{ in_array($day,$history)?'attend ='.\Illuminate\Support\Carbon::parse($att1->time)->format('H:i'):'not attendance'}}</p>
+                                    @if($att1)
+                                        <p class="card-text">{{ in_array($day,$history)?'attend ='.\Illuminate\Support\Carbon::parse($att1->time)->format('H:i'):'not attendance'}}</p>
+                                    @else
+                                        <p class="card-text">{{'not attendance'}}</p>
+                                    @endif
+
                                     <?php $att2 = $attend->where(['history' => $day, 'type' => 'leave', 'user_id' => $id])->first()?>
-                                    @if($att2 !=null)
+                                    @if($att2)
                                         <p class="card-text">{{ in_array($day,$history)?'leave ='.\Illuminate\Support\Carbon::parse($att2->time)->format('H:i'):''}}</p>
                                     @endif
                                     @break
                                 @endforeach
+                                    @if($attends->isEmpty())
+                                        <p class="card-text">{{'not attendance'}}</p>
+                                    @endif
                             </div>
                         </div>
                     </div>

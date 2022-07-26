@@ -18,15 +18,19 @@ class AttendanceController extends Controller
     {
         $attendance = auth()->user()->is_attendance;
         $datetime = Carbon::now()->toDateTimeString();
-        $cur_time = Carbon::createFromFormat('Y-m-d H:i:s', $datetime)->format('h:i:s');
-        $dt= Carbon::createFromFormat('H:i:s',$cur_time)->format('H:i:s');
+        $cur_time = Carbon::createFromFormat('Y-m-d H:i:s', $datetime)->format('h:i:s A');
+
+//      dump($cur_time);
+//        $dt= Carbon::createFromFormat('H:i:s',$cur_time)->format('H:i:s A');
+//        dd($dt);
+
         if ($attendance == false) {
-            $attendance_user = ['user_id' => auth()->user()->id, 'type' => 'presence', 'time' => $dt , 'history' => date("Y-m-d", time())];
+            $attendance_user = ['user_id' => auth()->user()->id, 'type' => 'presence', 'time' => $cur_time , 'history' => date("Y-m-d", time())];
             Attendance::create($attendance_user);
         }
 
         if ($attendance == true) {
-            Attendance::updateOrCreate(['user_id' => auth()->user()->id, 'type' => 'leave', 'history' => date("Y-m-d", time())], ['time' => $dt]);
+            Attendance::updateOrCreate(['user_id' => auth()->user()->id, 'type' => 'leave', 'history' => date("Y-m-d", time())], ['time' => $cur_time]);
         }
         return response()->json(['success' => true, 'message' => 'Data inserted successfully']);
     }
