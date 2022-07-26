@@ -44,7 +44,7 @@ class AdminPageController extends Controller
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function getCalender(Request $request)
+    public function getCalender(Request $request ,Salary $salary)
     {
         $current_month = $request->date ? Carbon::parse($request->date) : Carbon::now();
         $users = User::where(['is_admin' => 0, 'status' => 1])->get();
@@ -73,7 +73,7 @@ class AdminPageController extends Controller
         $history = [];
         foreach ($attends as $attend)
         {
-            $history[] = $attend->history;
+              $history[] = $attend->history;
         }
 
         $time_diff_hours = 0;
@@ -96,17 +96,9 @@ class AdminPageController extends Controller
             $daysmustattend = $absence + $daynumberofattend;
 
             $avarge_work_in_month = 8 * $daysmustattend;
+            $id = $request->id;
             //salary
-            $totalsalary = \auth()->user()->salary;
-            $user = User::where('id', $request->id)->first();
-            if ($user) {
-                $salaryofday = $user->salary / 30;
-                if ($daynumberofattend <= 15) {
-                    $totalsalary = $salaryofday * $daynumberofattend;
-                } else {
-                    $totalsalary = $user->salary - $salaryofday * $absence;
-                }
-            }
+            $totalsalary = $salary->getSalary($id,$daynumberofattend,$absence);
 
 
             foreach ($attends as $attend)
