@@ -13,7 +13,7 @@ class CreateAttendancesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('type');
-            $table->dateTime('time');
+            $table->string('time');
             $table->date('history');
 
             $table->timestamps();

@@ -44,17 +44,26 @@
                                     <th>name</th>
                                     <th>email</th>
                                     <th>phone</th>
-                                    <th>day</th>
+                                    <th>presence</th>
+                                    <th>leave</th>
+                                    <th>total</th>
                                     <th>history</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($userdata as $data)
                                     <tr>
+                                        <?php
+                                        $presence = \App\Models\Attendance::where(['user_id'=>$users->id ,'history'=>$data->history, 'type'=>'presence'])->first();
+                                        $leave = \App\Models\Attendance::where(['user_id'=>$users->id , 'history'=>$data->history,'type'=>'leave'])->first();
+                                        if ($leave) $total = (new \Carbon\Carbon($presence->time))->diff(new \Carbon\Carbon($leave->time))->format('%h:%I:%s');
+                                        ?>
                                         <td>{{$users->name}}</td>
                                         <td>{{$users->email}}</td>
                                         <td>{{$users->phone}}</td>
-                                        <td>{{$data->day}}</td>
+                                        <td>{{$presence->time}}</td>
+                                        <td>{{$leave?$leave->time:'00:00:00'}}</td>
+                                        <td>{{$leave ? $total:'00:00:00' }}</td>
                                         <td>{{$data->history}}</td>
                                     </tr>
                                 @endforeach

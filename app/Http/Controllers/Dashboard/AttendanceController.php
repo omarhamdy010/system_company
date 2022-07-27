@@ -17,13 +17,16 @@ class AttendanceController extends Controller
     public function store()
     {
         $attendance = auth()->user()->is_attendance;
+        $datetime = Carbon::now()->toDateTimeString();
+        $cur_time = Carbon::createFromFormat('Y-m-d H:i:s', $datetime)->format('h:i:s');
+        $dt= Carbon::createFromFormat('H:i:s',$cur_time)->format('H:i:s');
         if ($attendance == false) {
-            $attendance_user = ['user_id' => auth()->user()->id, 'type' => 'presence', 'time' => Carbon::now(), 'history' => date("Y-m-d", time())];
+            $attendance_user = ['user_id' => auth()->user()->id, 'type' => 'presence', 'time' => $dt , 'history' => date("Y-m-d", time())];
             Attendance::create($attendance_user);
         }
 
         if ($attendance == true) {
-            Attendance::updateOrCreate(['user_id' => auth()->user()->id, 'type' => 'leave', 'history' => date("Y-m-d", time())], ['time' => Carbon::now(),]);
+            Attendance::updateOrCreate(['user_id' => auth()->user()->id, 'type' => 'leave', 'history' => date("Y-m-d", time())], ['time' => $dt]);
         }
         return response()->json(['success' => true, 'message' => 'Data inserted successfully']);
     }
