@@ -25,6 +25,4 @@ Set your database credentials in your `.env` file
 
 `php artisan serve`
 
-test TODO can you see TDD in my github `php artisan test`
-
 `http://127.0.0.1:8000/`
